@@ -1,7 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Button, Card, Navbar } from "flowbite-react";
 import { BoltIcon, BookOpenIcon, RocketLaunchIcon, ChatBubbleLeftRightIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
-import { useTheme, Theme } from "~/utils/theme-provider";
+import { useTheme, Theme } from "~/utils/themeProvider";
 
 export const meta: MetaFunction = () => {
   return [

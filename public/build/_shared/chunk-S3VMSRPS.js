@@ -11,7 +11,7 @@ import {
   __toESM
 } from "/build/_shared/chunk-RODUX5XG.js";
 
-// app/utils/theme-provider.tsx
+// app/utils/themeProvider.tsx
 var import_react = __toESM(require_react(), 1);
 var import_jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
 if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
@@ -20,7 +20,7 @@ if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
   prevRefreshReg = window.$RefreshReg$;
   prevRefreshSig = window.$RefreshSig$;
   window.$RefreshReg$ = (type, id) => {
-    window.$RefreshRuntime$.register(type, '"app/utils/theme-provider.tsx"' + id);
+    window.$RefreshRuntime$.register(type, '"app/utils/themeProvider.tsx"' + id);
   };
   window.$RefreshSig$ = window.$RefreshRuntime$.createSignatureFunctionForTransform;
 }
@@ -31,9 +31,9 @@ var _s2 = $RefreshSig$();
 if (import.meta) {
   import.meta.hot = createHotContext(
     //@ts-expect-error
-    "app/utils/theme-provider.tsx"
+    "app/utils/themeProvider.tsx"
   );
-  import.meta.hot.lastModified = "1741255187019.4268";
+  import.meta.hot.lastModified = "1741256227409.218";
 }
 var Theme = /* @__PURE__ */ function(Theme2) {
   Theme2["DARK"] = "dark";
@@ -74,7 +74,7 @@ function ThemeProvider({
     setTheme
   };
   return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(ThemeContext.Provider, { value, children }, void 0, false, {
-    fileName: "app/utils/theme-provider.tsx",
+    fileName: "app/utils/themeProvider.tsx",
     lineNumber: 74,
     columnNumber: 10
   }, this);
@@ -100,4 +100,4 @@ export {
   ThemeProvider,
   useTheme
 };
-//# sourceMappingURL=/build/_shared/chunk-XGORMWGD.js.map
+//# sourceMappingURL=/build/_shared/chunk-S3VMSRPS.js.map
