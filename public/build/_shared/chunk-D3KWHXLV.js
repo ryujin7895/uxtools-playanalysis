@@ -12325,7 +12325,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/analysis/AnalysisResults.tsx"
   );
-  import.meta.hot.lastModified = "1741322631115.493";
+  import.meta.hot.lastModified = "1741326600719.0107";
 }
 function AnalysisResults({
   onReset,
@@ -12333,8 +12333,14 @@ function AnalysisResults({
   result,
   comparisonResults
 }) {
+  const enhancedResult = result;
+  const enhancedComparisonResults = comparisonResults;
   const isComparisonMode = !!comparisonResults?.length;
   const totalComments = result.comments.length + (comparisonResults?.reduce((sum, r) => sum + r.comments.length, 0) || 0);
+  const hasEnhancedData = (res) => {
+    const enhanced = res;
+    return !!(enhanced.featureRequests || enhanced.bugReports || enhanced.userSegments || enhanced.competitiveMentions);
+  };
   return /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { className: "w-full shadow-sm rounded-2xl", children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col space-y-4 mb-6", children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex items-center justify-between", children: [
@@ -12342,40 +12348,40 @@ function AnalysisResults({
           "Analysis Results",
           isComparisonMode && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { className: "ml-3 bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300", children: "Comparison Mode" }, void 0, false, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 36,
+            lineNumber: 48,
             columnNumber: 34
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 34,
+          lineNumber: 46,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Button, { color: "light", onClick: onReset, className: "flex items-center shadow-sm hover:shadow transition-shadow", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(ArrowPathIcon_default, { className: "w-4 h-4 mr-2" }, void 0, false, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 41,
+            lineNumber: 53,
             columnNumber: 13
           }, this),
           "New Analysis"
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 40,
+          lineNumber: 52,
           columnNumber: 11
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisResults.tsx",
-        lineNumber: 33,
+        lineNumber: 45,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: (/* @__PURE__ */ new Date()).toLocaleDateString() }, void 0, false, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 47,
+          lineNumber: 59,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: "\u2022" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 48,
+          lineNumber: 60,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Badge, { color: "gray", className: "px-2.5 py-0.5", children: [
@@ -12384,12 +12390,12 @@ function AnalysisResults({
           appCount > 1 ? "apps" : "app"
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 49,
+          lineNumber: 61,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: "\u2022" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 52,
+          lineNumber: 64,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: [
@@ -12397,17 +12403,17 @@ function AnalysisResults({
           " comments analyzed"
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 53,
+          lineNumber: 65,
           columnNumber: 11
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisResults.tsx",
-        lineNumber: 46,
+        lineNumber: 58,
         columnNumber: 9
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisResults.tsx",
-      lineNumber: 32,
+      lineNumber: 44,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
@@ -12417,14 +12423,14 @@ function AnalysisResults({
           " Sentiment Analysis"
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 60,
+          lineNumber: 72,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "space-y-2", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex justify-between items-center", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: "Positive" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 65,
+              lineNumber: 77,
               columnNumber: 15
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex items-center", children: [
@@ -12432,32 +12438,32 @@ function AnalysisResults({
                 width: `${result.sentiment.positive / result.comments.length * 100}%`
               } }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 68,
+                lineNumber: 80,
                 columnNumber: 19
               }, this) }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 67,
+                lineNumber: 79,
                 columnNumber: 17
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { className: "text-sm", children: result.sentiment.positive }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 72,
+                lineNumber: 84,
                 columnNumber: 17
               }, this)
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 66,
+              lineNumber: 78,
               columnNumber: 15
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 64,
+            lineNumber: 76,
             columnNumber: 13
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex justify-between items-center", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: "Negative" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 76,
+              lineNumber: 88,
               columnNumber: 15
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex items-center", children: [
@@ -12465,32 +12471,32 @@ function AnalysisResults({
                 width: `${result.sentiment.negative / result.comments.length * 100}%`
               } }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 79,
+                lineNumber: 91,
                 columnNumber: 19
               }, this) }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 78,
+                lineNumber: 90,
                 columnNumber: 17
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { className: "text-sm", children: result.sentiment.negative }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 83,
+                lineNumber: 95,
                 columnNumber: 17
               }, this)
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 77,
+              lineNumber: 89,
               columnNumber: 15
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 75,
+            lineNumber: 87,
             columnNumber: 13
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex justify-between items-center", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: "Neutral" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 87,
+              lineNumber: 99,
               columnNumber: 15
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex items-center", children: [
@@ -12498,36 +12504,36 @@ function AnalysisResults({
                 width: `${result.sentiment.neutral / result.comments.length * 100}%`
               } }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 90,
+                lineNumber: 102,
                 columnNumber: 19
               }, this) }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 89,
+                lineNumber: 101,
                 columnNumber: 17
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { className: "text-sm", children: result.sentiment.neutral }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 94,
+                lineNumber: 106,
                 columnNumber: 17
               }, this)
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 88,
+              lineNumber: 100,
               columnNumber: 15
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 86,
+            lineNumber: 98,
             columnNumber: 13
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 63,
+          lineNumber: 75,
           columnNumber: 11
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisResults.tsx",
-        lineNumber: 59,
+        lineNumber: 71,
         columnNumber: 9
       }, this),
       comparisonResults?.map((compResult, index3) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "space-y-4", children: [
@@ -12537,14 +12543,14 @@ function AnalysisResults({
           " Sentiment Analysis"
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 102,
+          lineNumber: 114,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "space-y-2", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex justify-between items-center", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: "Positive" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 107,
+              lineNumber: 119,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex items-center", children: [
@@ -12552,32 +12558,32 @@ function AnalysisResults({
                 width: `${compResult.sentiment.positive / compResult.comments.length * 100}%`
               } }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 110,
+                lineNumber: 122,
                 columnNumber: 21
               }, this) }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 109,
+                lineNumber: 121,
                 columnNumber: 19
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { className: "text-sm", children: compResult.sentiment.positive }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 114,
+                lineNumber: 126,
                 columnNumber: 19
               }, this)
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 108,
+              lineNumber: 120,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 106,
+            lineNumber: 118,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex justify-between items-center", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: "Negative" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 118,
+              lineNumber: 130,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex items-center", children: [
@@ -12585,32 +12591,32 @@ function AnalysisResults({
                 width: `${compResult.sentiment.negative / compResult.comments.length * 100}%`
               } }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 121,
+                lineNumber: 133,
                 columnNumber: 21
               }, this) }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 120,
+                lineNumber: 132,
                 columnNumber: 19
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { className: "text-sm", children: compResult.sentiment.negative }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 125,
+                lineNumber: 137,
                 columnNumber: 19
               }, this)
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 119,
+              lineNumber: 131,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 117,
+            lineNumber: 129,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex justify-between items-center", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: "Neutral" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 129,
+              lineNumber: 141,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex items-center", children: [
@@ -12618,42 +12624,42 @@ function AnalysisResults({
                 width: `${compResult.sentiment.neutral / compResult.comments.length * 100}%`
               } }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 132,
+                lineNumber: 144,
                 columnNumber: 21
               }, this) }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 131,
+                lineNumber: 143,
                 columnNumber: 19
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { className: "text-sm", children: compResult.sentiment.neutral }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 136,
+                lineNumber: 148,
                 columnNumber: 19
               }, this)
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 130,
+              lineNumber: 142,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 128,
+            lineNumber: 140,
             columnNumber: 15
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 105,
+          lineNumber: 117,
           columnNumber: 13
         }, this)
       ] }, index3, true, {
         fileName: "app/components/analysis/AnalysisResults.tsx",
-        lineNumber: 101,
+        lineNumber: 113,
         columnNumber: 56
       }, this)),
       /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "space-y-4", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h3", { className: "text-lg font-semibold", children: "Top Keywords" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 144,
+          lineNumber: 156,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-wrap gap-2", children: result.keywords.map(({
@@ -12666,119 +12672,366 @@ function AnalysisResults({
           ")"
         ] }, word, true, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 149,
+          lineNumber: 161,
           columnNumber: 17
         }, this)) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 145,
+          lineNumber: 157,
           columnNumber: 11
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisResults.tsx",
-        lineNumber: 143,
+        lineNumber: 155,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "md:col-span-2 space-y-4", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h3", { className: "text-lg font-semibold", children: "User Intentions" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 157,
+          lineNumber: 169,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-center", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-2xl font-bold text-blue-600", children: result.intentions.feature_request.length }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 161,
+              lineNumber: 173,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-sm text-gray-500", children: "Feature Requests" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 164,
+              lineNumber: 176,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 160,
+            lineNumber: 172,
             columnNumber: 15
           }, this) }, void 0, false, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 159,
+            lineNumber: 171,
             columnNumber: 13
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-center", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-2xl font-bold text-red-600", children: result.intentions.bug_report.length }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 169,
+              lineNumber: 181,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-sm text-gray-500", children: "Bug Reports" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 172,
+              lineNumber: 184,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 168,
+            lineNumber: 180,
             columnNumber: 15
           }, this) }, void 0, false, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 167,
+            lineNumber: 179,
             columnNumber: 13
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-center", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-2xl font-bold text-green-600", children: result.intentions.praise.length }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 177,
+              lineNumber: 189,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-sm text-gray-500", children: "Praise" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 180,
+              lineNumber: 192,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 176,
+            lineNumber: 188,
             columnNumber: 15
           }, this) }, void 0, false, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 175,
+            lineNumber: 187,
             columnNumber: 13
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-center", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-2xl font-bold text-yellow-600", children: result.intentions.complaint.length }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 185,
+              lineNumber: 197,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-sm text-gray-500", children: "Complaints" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 188,
+              lineNumber: 200,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 184,
+            lineNumber: 196,
             columnNumber: 15
           }, this) }, void 0, false, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 183,
+            lineNumber: 195,
             columnNumber: 13
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 158,
+          lineNumber: 170,
           columnNumber: 11
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisResults.tsx",
-        lineNumber: 156,
+        lineNumber: 168,
         columnNumber: 9
+      }, this),
+      hasEnhancedData(result) && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "md:col-span-2 space-y-4", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h3", { className: "text-lg font-semibold", children: "Advanced Analysis" }, void 0, false, {
+          fileName: "app/components/analysis/AnalysisResults.tsx",
+          lineNumber: 208,
+          columnNumber: 13
+        }, this),
+        enhancedResult.featureRequests && enhancedResult.featureRequests.length > 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion.Panel, { children: [
+          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion.Title, { children: [
+            "Feature Requests (",
+            enhancedResult.featureRequests.length,
+            ")"
+          ] }, void 0, true, {
+            fileName: "app/components/analysis/AnalysisResults.tsx",
+            lineNumber: 213,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion.Content, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "space-y-4", children: enhancedResult.featureRequests.slice(0, 5).map((item, idx) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { className: "overflow-hidden", children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex justify-between", children: [
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h4", { className: "font-medium", children: item.feature }, void 0, false, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 220,
+                columnNumber: 29
+              }, this),
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Badge, { color: "blue", children: [
+                item.count,
+                " ",
+                item.count === 1 ? "mention" : "mentions"
+              ] }, void 0, true, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 221,
+                columnNumber: 29
+              }, this)
+            ] }, void 0, true, {
+              fileName: "app/components/analysis/AnalysisResults.tsx",
+              lineNumber: 219,
+              columnNumber: 27
+            }, this),
+            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-sm text-gray-500 mt-1", children: [
+              "Avg. rating: ",
+              item.averageRating.toFixed(1),
+              "/5"
+            ] }, void 0, true, {
+              fileName: "app/components/analysis/AnalysisResults.tsx",
+              lineNumber: 225,
+              columnNumber: 27
+            }, this),
+            item.examples.length > 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "mt-2", children: [
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-sm font-medium", children: "Example comment:" }, void 0, false, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 227,
+                columnNumber: 31
+              }, this),
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-sm italic text-gray-600 mt-1 border-l-2 border-gray-200 pl-3", children: [
+                '"',
+                item.examples[0],
+                '"'
+              ] }, void 0, true, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 228,
+                columnNumber: 31
+              }, this)
+            ] }, void 0, true, {
+              fileName: "app/components/analysis/AnalysisResults.tsx",
+              lineNumber: 226,
+              columnNumber: 56
+            }, this)
+          ] }, idx, true, {
+            fileName: "app/components/analysis/AnalysisResults.tsx",
+            lineNumber: 218,
+            columnNumber: 86
+          }, this)) }, void 0, false, {
+            fileName: "app/components/analysis/AnalysisResults.tsx",
+            lineNumber: 217,
+            columnNumber: 21
+          }, this) }, void 0, false, {
+            fileName: "app/components/analysis/AnalysisResults.tsx",
+            lineNumber: 216,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "app/components/analysis/AnalysisResults.tsx",
+          lineNumber: 212,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "app/components/analysis/AnalysisResults.tsx",
+          lineNumber: 211,
+          columnNumber: 93
+        }, this),
+        enhancedResult.bugReports && enhancedResult.bugReports.length > 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion.Panel, { children: [
+          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion.Title, { children: [
+            "Bug Reports (",
+            enhancedResult.bugReports.length,
+            ")"
+          ] }, void 0, true, {
+            fileName: "app/components/analysis/AnalysisResults.tsx",
+            lineNumber: 241,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion.Content, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "space-y-4", children: enhancedResult.bugReports.slice(0, 5).map((item, idx) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { className: "overflow-hidden", children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex justify-between", children: [
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h4", { className: "font-medium", children: item.issue }, void 0, false, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 248,
+                columnNumber: 29
+              }, this),
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Badge, { color: item.severity === "high" ? "failure" : item.severity === "medium" ? "warning" : "gray", children: [
+                item.severity,
+                " severity"
+              ] }, void 0, true, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 249,
+                columnNumber: 29
+              }, this)
+            ] }, void 0, true, {
+              fileName: "app/components/analysis/AnalysisResults.tsx",
+              lineNumber: 247,
+              columnNumber: 27
+            }, this),
+            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-sm text-gray-500 mt-1", children: [
+              item.count,
+              " ",
+              item.count === 1 ? "report" : "reports"
+            ] }, void 0, true, {
+              fileName: "app/components/analysis/AnalysisResults.tsx",
+              lineNumber: 253,
+              columnNumber: 27
+            }, this),
+            item.examples.length > 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "mt-2", children: [
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-sm font-medium", children: "Example report:" }, void 0, false, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 255,
+                columnNumber: 31
+              }, this),
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-sm italic text-gray-600 mt-1 border-l-2 border-gray-200 pl-3", children: [
+                '"',
+                item.examples[0],
+                '"'
+              ] }, void 0, true, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 256,
+                columnNumber: 31
+              }, this)
+            ] }, void 0, true, {
+              fileName: "app/components/analysis/AnalysisResults.tsx",
+              lineNumber: 254,
+              columnNumber: 56
+            }, this)
+          ] }, idx, true, {
+            fileName: "app/components/analysis/AnalysisResults.tsx",
+            lineNumber: 246,
+            columnNumber: 81
+          }, this)) }, void 0, false, {
+            fileName: "app/components/analysis/AnalysisResults.tsx",
+            lineNumber: 245,
+            columnNumber: 21
+          }, this) }, void 0, false, {
+            fileName: "app/components/analysis/AnalysisResults.tsx",
+            lineNumber: 244,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "app/components/analysis/AnalysisResults.tsx",
+          lineNumber: 240,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "app/components/analysis/AnalysisResults.tsx",
+          lineNumber: 239,
+          columnNumber: 83
+        }, this),
+        enhancedResult.userSegments && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion.Panel, { children: [
+          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion.Title, { children: "User Segments Analysis" }, void 0, false, {
+            fileName: "app/components/analysis/AnalysisResults.tsx",
+            lineNumber: 269,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Accordion.Content, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4", children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { children: [
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h4", { className: "text-center font-medium", children: "New Users" }, void 0, false, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 275,
+                columnNumber: 25
+              }, this),
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-center text-2xl font-bold text-blue-600", children: enhancedResult.userSegments.newUsers.length }, void 0, false, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 276,
+                columnNumber: 25
+              }, this)
+            ] }, void 0, true, {
+              fileName: "app/components/analysis/AnalysisResults.tsx",
+              lineNumber: 274,
+              columnNumber: 23
+            }, this),
+            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { children: [
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h4", { className: "text-center font-medium", children: "Power Users" }, void 0, false, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 281,
+                columnNumber: 25
+              }, this),
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-center text-2xl font-bold text-purple-600", children: enhancedResult.userSegments.powerUsers.length }, void 0, false, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 282,
+                columnNumber: 25
+              }, this)
+            ] }, void 0, true, {
+              fileName: "app/components/analysis/AnalysisResults.tsx",
+              lineNumber: 280,
+              columnNumber: 23
+            }, this),
+            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { children: [
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h4", { className: "text-center font-medium", children: "Returning Users" }, void 0, false, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 287,
+                columnNumber: 25
+              }, this),
+              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-center text-2xl font-bold text-green-600", children: enhancedResult.userSegments.returningUsers.length }, void 0, false, {
+                fileName: "app/components/analysis/AnalysisResults.tsx",
+                lineNumber: 288,
+                columnNumber: 25
+              }, this)
+            ] }, void 0, true, {
+              fileName: "app/components/analysis/AnalysisResults.tsx",
+              lineNumber: 286,
+              columnNumber: 23
+            }, this)
+          ] }, void 0, true, {
+            fileName: "app/components/analysis/AnalysisResults.tsx",
+            lineNumber: 273,
+            columnNumber: 21
+          }, this) }, void 0, false, {
+            fileName: "app/components/analysis/AnalysisResults.tsx",
+            lineNumber: 272,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "app/components/analysis/AnalysisResults.tsx",
+          lineNumber: 268,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "app/components/analysis/AnalysisResults.tsx",
+          lineNumber: 267,
+          columnNumber: 45
+        }, this)
+      ] }, void 0, true, {
+        fileName: "app/components/analysis/AnalysisResults.tsx",
+        lineNumber: 207,
+        columnNumber: 37
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "md:col-span-2 space-y-4", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h3", { className: "text-lg font-semibold", children: "Recent Comments" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 196,
+          lineNumber: 300,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "space-y-4", children: result.comments.slice(0, 5).map((comment) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { children: [
@@ -12786,32 +13039,32 @@ function AnalysisResults({
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "space-y-1", children: [
               /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "font-medium", children: comment.userName }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 201,
+                lineNumber: 305,
                 columnNumber: 21
               }, this),
               /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "text-sm text-gray-500", children: new Date(comment.date).toLocaleDateString() }, void 0, false, {
                 fileName: "app/components/analysis/AnalysisResults.tsx",
-                lineNumber: 202,
+                lineNumber: 306,
                 columnNumber: 21
               }, this)
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 200,
+              lineNumber: 304,
               columnNumber: 19
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Badge, { color: comment.sentiment === "positive" ? "success" : comment.sentiment === "negative" ? "failure" : "gray", children: comment.sentiment }, void 0, false, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 206,
+              lineNumber: 310,
               columnNumber: 19
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 199,
+            lineNumber: 303,
             columnNumber: 17
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "mt-2 text-gray-600 dark:text-gray-300", children: comment.content }, void 0, false, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 210,
+            lineNumber: 314,
             columnNumber: 17
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "mt-2 flex items-center space-x-4 text-sm text-gray-500", children: [
@@ -12821,7 +13074,7 @@ function AnalysisResults({
               "/5"
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 212,
+              lineNumber: 316,
               columnNumber: 19
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: [
@@ -12830,36 +13083,36 @@ function AnalysisResults({
               " likes"
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisResults.tsx",
-              lineNumber: 213,
+              lineNumber: 317,
               columnNumber: 19
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisResults.tsx",
-            lineNumber: 211,
+            lineNumber: 315,
             columnNumber: 17
           }, this)
         ] }, comment.id, true, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 198,
+          lineNumber: 302,
           columnNumber: 57
         }, this)) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 197,
+          lineNumber: 301,
           columnNumber: 11
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisResults.tsx",
-        lineNumber: 195,
+        lineNumber: 299,
         columnNumber: 9
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisResults.tsx",
-      lineNumber: 57,
+      lineNumber: 69,
       columnNumber: 7
     }, this)
   ] }, void 0, true, {
     fileName: "app/components/analysis/AnalysisResults.tsx",
-    lineNumber: 31,
+    lineNumber: 43,
     columnNumber: 10
   }, this);
 }
@@ -12898,4 +13151,4 @@ tabbable/dist/index.esm.js:
   * @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
   *)
 */
-//# sourceMappingURL=/build/_shared/chunk-E2WWS2MJ.js.map
+//# sourceMappingURL=/build/_shared/chunk-D3KWHXLV.js.map

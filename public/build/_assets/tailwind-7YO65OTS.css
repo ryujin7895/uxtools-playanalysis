@@ -1512,6 +1512,9 @@ input:checked + .toggle-bg {
 .mt-\[30px\] {
   margin-top: 30px;
 }
+.mt-1 {
+  margin-top: .25rem;
+}
 .block {
   display: block;
 }
@@ -2119,6 +2122,9 @@ input:checked + .toggle-bg {
 }
 .border-t-4 {
   border-top-width: 4px;
+}
+.border-l-2 {
+  border-left-width: 2px;
 }
 .border-blue-500 {
   --tw-border-opacity: 1;
@@ -5368,6 +5374,9 @@ body:is(.dark *) {
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .md\:flex-row {
     flex-direction: row;
   }
@@ -5469,4 +5478,4 @@ body:is(.dark *) {
 .\[\&\>\*\]\:last\:border-b-0:last-child > * {
   border-bottom-width: 0px;
 }
-/*# sourceMappingURL=/build/_assets/tailwind-MYZ46TO4.css.map */
+/*# sourceMappingURL=/build/_assets/tailwind-FJNGLRE7.css.map */

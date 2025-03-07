@@ -1,17 +1,63 @@
-import { Card, Button, Badge } from "flowbite-react";
+import { Card, Button, Badge, Accordion } from "flowbite-react";
 import { ArrowPathIcon, ChartBarIcon } from '@heroicons/react/24/outline';
-import type { AnalysisResult } from "~/types/analysis";
+import type { AnalysisResult, Comment } from "~/types/analysis";
+
+// Add interfaces to handle the enhanced data
+interface EnhancedAnalysisProps extends AnalysisResultsProps {
+  result: EnhancedAnalysisResult;
+  comparisonResults?: EnhancedAnalysisResult[];
+}
+
+interface EnhancedAnalysisResult extends AnalysisResult {
+  featureRequests?: {
+    feature: string;
+    count: number;
+    examples: string[];
+    averageRating: number;
+  }[];
+  bugReports?: {
+    issue: string;
+    count: number;
+    examples: string[];
+    severity: 'low' | 'medium' | 'high';
+  }[];
+  userSegments?: {
+    newUsers: Comment[];
+    powerUsers: Comment[];
+    returningUsers: Comment[];
+  };
+  competitiveMentions?: {
+    competitor: string;
+    mentions: Comment[];
+    sentiment: {
+      positive: number;
+      negative: number;
+      neutral: number;
+    };
+  }[];
+}
 
 interface AnalysisResultsProps {
   onReset: () => void;
   appCount: number;
-  result: AnalysisResult;
-  comparisonResults?: AnalysisResult[];
+  result: AnalysisResult | EnhancedAnalysisResult;
+  comparisonResults?: (AnalysisResult | EnhancedAnalysisResult)[];
 }
 
 export function AnalysisResults({ onReset, appCount, result, comparisonResults }: AnalysisResultsProps) {
+  // Cast to enhanced type to safely access enhanced properties
+  const enhancedResult = result as EnhancedAnalysisResult;
+  const enhancedComparisonResults = comparisonResults as EnhancedAnalysisResult[] | undefined;
+  
   const isComparisonMode = !!comparisonResults?.length;
   const totalComments = result.comments.length + (comparisonResults?.reduce((sum, r) => sum + r.comments.length, 0) || 0);
+
+  // Helper function to check if result has enhanced data
+  const hasEnhancedData = (res: AnalysisResult | EnhancedAnalysisResult): boolean => {
+    const enhanced = res as EnhancedAnalysisResult;
+    return !!(enhanced.featureRequests || enhanced.bugReports || 
+              enhanced.userSegments || enhanced.competitiveMentions);
+  };
 
   return (
     <Card className="w-full shadow-sm rounded-2xl">
@@ -185,6 +231,114 @@ export function AnalysisResults({ onReset, appCount, result, comparisonResults }
             </Card>
           </div>
         </div>
+
+        {/* Enhanced Analysis Sections - only show if data exists */}
+        {hasEnhancedData(result) && (
+          <div className="md:col-span-2 space-y-4">
+            <h3 className="text-lg font-semibold">Advanced Analysis</h3>
+            
+            {/* Feature Requests Analysis */}
+            {enhancedResult.featureRequests && enhancedResult.featureRequests.length > 0 && (
+              <Accordion>
+                <Accordion.Panel>
+                  <Accordion.Title>
+                    Feature Requests ({enhancedResult.featureRequests.length})
+                  </Accordion.Title>
+                  <Accordion.Content>
+                    <div className="space-y-4">
+                      {enhancedResult.featureRequests.slice(0, 5).map((item, idx) => (
+                        <Card key={idx} className="overflow-hidden">
+                          <div className="flex justify-between">
+                            <h4 className="font-medium">{item.feature}</h4>
+                            <Badge color="blue">
+                              {item.count} {item.count === 1 ? 'mention' : 'mentions'}
+                            </Badge>
+                          </div>
+                          <div className="text-sm text-gray-500 mt-1">Avg. rating: {item.averageRating.toFixed(1)}/5</div>
+                          {item.examples.length > 0 && (
+                            <div className="mt-2">
+                              <div className="text-sm font-medium">Example comment:</div>
+                              <p className="text-sm italic text-gray-600 mt-1 border-l-2 border-gray-200 pl-3">
+                                "{item.examples[0]}"
+                              </p>
+                            </div>
+                          )}
+                        </Card>
+                      ))}
+                    </div>
+                  </Accordion.Content>
+                </Accordion.Panel>
+              </Accordion>
+            )}
+            
+            {/* Bug Reports Analysis */}
+            {enhancedResult.bugReports && enhancedResult.bugReports.length > 0 && (
+              <Accordion>
+                <Accordion.Panel>
+                  <Accordion.Title>
+                    Bug Reports ({enhancedResult.bugReports.length})
+                  </Accordion.Title>
+                  <Accordion.Content>
+                    <div className="space-y-4">
+                      {enhancedResult.bugReports.slice(0, 5).map((item, idx) => (
+                        <Card key={idx} className="overflow-hidden">
+                          <div className="flex justify-between">
+                            <h4 className="font-medium">{item.issue}</h4>
+                            <Badge color={item.severity === 'high' ? 'failure' : item.severity === 'medium' ? 'warning' : 'gray'}>
+                              {item.severity} severity
+                            </Badge>
+                          </div>
+                          <div className="text-sm text-gray-500 mt-1">{item.count} {item.count === 1 ? 'report' : 'reports'}</div>
+                          {item.examples.length > 0 && (
+                            <div className="mt-2">
+                              <div className="text-sm font-medium">Example report:</div>
+                              <p className="text-sm italic text-gray-600 mt-1 border-l-2 border-gray-200 pl-3">
+                                "{item.examples[0]}"
+                              </p>
+                            </div>
+                          )}
+                        </Card>
+                      ))}
+                    </div>
+                  </Accordion.Content>
+                </Accordion.Panel>
+              </Accordion>
+            )}
+            
+            {/* User Segments Analysis */}
+            {enhancedResult.userSegments && (
+              <Accordion>
+                <Accordion.Panel>
+                  <Accordion.Title>
+                    User Segments Analysis
+                  </Accordion.Title>
+                  <Accordion.Content>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <Card>
+                        <h4 className="text-center font-medium">New Users</h4>
+                        <div className="text-center text-2xl font-bold text-blue-600">
+                          {enhancedResult.userSegments.newUsers.length}
+                        </div>
+                      </Card>
+                      <Card>
+                        <h4 className="text-center font-medium">Power Users</h4>
+                        <div className="text-center text-2xl font-bold text-purple-600">
+                          {enhancedResult.userSegments.powerUsers.length}
+                        </div>
+                      </Card>
+                      <Card>
+                        <h4 className="text-center font-medium">Returning Users</h4>
+                        <div className="text-center text-2xl font-bold text-green-600">
+                          {enhancedResult.userSegments.returningUsers.length}
+                        </div>
+                      </Card>
+                    </div>
+                  </Accordion.Content>
+                </Accordion.Panel>
+              </Accordion>
+            )}
+          </div>
+        )}
 
         {/* Recent Comments */}
         <div className="md:col-span-2 space-y-4">
