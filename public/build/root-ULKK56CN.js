@@ -1,14 +1,15 @@
 import {
+  ThemeProvider
+} from "/build/_shared/chunk-S3VMSRPS.js";
+import {
   Links,
   LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration
-} from "/build/_shared/chunk-3F7AL7EU.js";
-import {
-  ThemeProvider
-} from "/build/_shared/chunk-S3VMSRPS.js";
+} from "/build/_shared/chunk-YR5DUWXI.js";
+import "/build/_shared/chunk-OPGM6WIO.js";
 import {
   require_jsx_dev_runtime
 } from "/build/_shared/chunk-WWEL7QKW.js";
@@ -16,14 +17,13 @@ import {
   createHotContext
 } from "/build/_shared/chunk-FQLJGGLM.js";
 import "/build/_shared/chunk-N4FG5RPV.js";
-import "/build/_shared/chunk-OPGM6WIO.js";
 import "/build/_shared/chunk-2AFRYLX2.js";
 import {
   __toESM
 } from "/build/_shared/chunk-RODUX5XG.js";
 
 // app/tailwind.css
-var tailwind_default = "/build/_assets/tailwind-JL4AWYFI.css";
+var tailwind_default = "/build/_assets/tailwind-GQK2O477.css";
 
 // app/root.tsx
 var import_jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
@@ -144,4 +144,4 @@ export {
   App as default,
   links
 };
-//# sourceMappingURL=/build/root-PCSBMSZH.js.map
+//# sourceMappingURL=/build/root-ULKK56CN.js.map

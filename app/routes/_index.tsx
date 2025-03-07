@@ -1,4 +1,6 @@
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction, ActionFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useActionData, useNavigation } from "@remix-run/react";
 import { Button, Card, Navbar, Dropdown, TextInput, Label, Tooltip, Spinner } from "flowbite-react";
 import { useState, useRef, useEffect } from "react";
 import { SunIcon, MoonIcon, PlusIcon, MinusIcon, ChartBarIcon, ArrowPathIcon, XMarkIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
@@ -8,12 +10,49 @@ import { SingleAppAnalysis } from "~/components/analysis/SingleAppAnalysis";
 import { ComparisonAnalysis } from "~/components/analysis/ComparisonAnalysis";
 import { AnalysisResults } from "~/components/analysis/AnalysisResults";
 import { ThemeToggle } from "~/components/common/ThemeToggle";
+import { PlayStoreService } from "~/services/server/playstore.server";
+import type { AnalysisResult } from "~/types/analysis";
 
 export const meta: MetaFunction = () => {
   return [
     { title: "Play Store Analysis Tool" },
     { name: "description", content: "Analyze Play Store comments to extract insights" },
   ];
+};
+
+export const action: ActionFunction = async ({ request }) => {
+  console.log('Action function called');
+  const formData = await request.formData();
+  const appIds = formData.getAll("appIds[]");
+  const dateRange = formData.get("dateRange") as string;
+
+  console.log('Form data:', { appIds, dateRange });
+
+  if (!appIds.length || !dateRange) {
+    console.error('Missing required fields');
+    return json(
+      { success: false, error: 'Missing required fields' },
+      { status: 400 }
+    );
+  }
+
+  try {
+    console.log('Starting analysis for apps:', appIds);
+    const results = await Promise.all(
+      appIds.map(appId => PlayStoreService.fetchComments(appId.toString(), dateRange))
+    );
+    console.log('Analysis completed successfully');
+    return json({ success: true, results });
+  } catch (error) {
+    console.error('Analysis failed:', error);
+    return json(
+      { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Failed to analyze comments'
+      },
+      { status: 500 }
+    );
+  }
 };
 
 // Date range preset options
@@ -28,14 +67,13 @@ const DATE_RANGE_PRESETS = [
 
 export default function Index() {
   const { theme, setTheme } = useTheme();
+  const navigation = useNavigation();
+  const actionData = useActionData<{ success: boolean; results: AnalysisResult[] }>();
   
   // State for app inputs
   const [appInputs, setAppInputs] = useState([{ id: 1, value: "", error: "" }]);
   const [dateRange, setDateRange] = useState(DATE_RANGE_PRESETS[1].value);
   const [customDateRange, setCustomDateRange] = useState({ start: "", end: "" });
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const [isComparisonMode, setIsComparisonMode] = useState(false);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   
   // Refs for custom date inputs
@@ -43,13 +81,15 @@ export default function Index() {
   const endDateRef = useRef<HTMLInputElement>(null);
 
   // Check if we're in comparison mode whenever appInputs changes
-  useEffect(() => {
-    setIsComparisonMode(appInputs.length > 1);
-  }, [appInputs]);
+  const isComparisonMode = appInputs.length > 1;
+  const isAnalyzing = navigation.state === "submitting";
 
-  const toggleTheme = () => {
-    setTheme(theme === Theme.DARK ? Theme.LIGHT : Theme.DARK);
-  };
+  // Reset form when analysis is complete
+  useEffect(() => {
+    if (actionData?.success && actionData.results) {
+      setAppInputs([{ id: 1, value: "", error: "" }]);
+    }
+  }, [actionData]);
 
   // Validate app ID/URL
   const validateAppInput = (value: string) => {
@@ -91,32 +131,9 @@ export default function Index() {
     }
   };
 
-  // Handle analysis action
-  const startAnalysis = () => {
-    // Validate all inputs first
-    const hasErrors = appInputs.some(input => {
-      const error = validateAppInput(input.value);
-      if (error) {
-        handleAppInputChange(input.id, input.value); // This will set the error
-        return true;
-      }
-      return false;
-    });
-
-    if (!hasErrors) {
-      setIsAnalyzing(true);
-      
-      // Simulate analysis process
-      setTimeout(() => {
-        setIsAnalyzing(false);
-        setShowResults(true);
-      }, 2000);
-    }
-  };
-
   // Reset analysis
   const resetAnalysis = () => {
-    setShowResults(false);
+    setAppInputs([{ id: 1, value: "", error: "" }]);
   };
 
   // Handle date range change
@@ -130,7 +147,7 @@ export default function Index() {
       setIsDatePickerOpen(false);
     }
   };
-  
+
   return (
     <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
       <Navbar fluid className="border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 px-4 sm:px-6">
@@ -148,7 +165,7 @@ export default function Index() {
       
       <main className="flex-grow container mx-auto px-4 py-12 flex items-center justify-center">
         <AnimatePresence mode="wait">
-          {!showResults ? (
+          {!actionData?.success ? (
             <motion.div 
               key="console"
               initial={{ opacity: 0, y: 20 }}
@@ -165,7 +182,6 @@ export default function Index() {
                   onInputChange={handleAppInputChange}
                   dateRange={dateRange}
                   onDateRangeChange={handleDateRangeChange}
-                  onAnalyze={startAnalysis}
                   isAnalyzing={isAnalyzing}
                 />
               ) : (
@@ -174,9 +190,8 @@ export default function Index() {
                   onInputChange={(value) => handleAppInputChange(appInputs[0].id, value)}
                   dateRange={dateRange}
                   onDateRangeChange={handleDateRangeChange}
-                  onAnalyze={startAnalysis}
-                  isAnalyzing={isAnalyzing}
                   onAddApp={addAppInput}
+                  isAnalyzing={isAnalyzing}
                 />
               )}
             </motion.div>
@@ -184,6 +199,8 @@ export default function Index() {
             <AnalysisResults 
               onReset={resetAnalysis}
               appCount={appInputs.length}
+              result={Array.isArray(actionData.results) ? actionData.results[0] : actionData.results}
+              comparisonResults={Array.isArray(actionData.results) ? actionData.results.slice(1) : undefined}
             />
           )}
         </AnimatePresence>

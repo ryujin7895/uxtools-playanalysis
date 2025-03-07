@@ -1,4 +1,9 @@
-import { Dropdown, Label } from "flowbite-react";
+import { Select } from "flowbite-react";
+
+interface DateRangeSelectorProps {
+  value: string;
+  onChange: (value: string) => void;
+}
 
 const DATE_RANGE_PRESETS = [
   { label: "Last 7 days", value: "7days" },
@@ -9,35 +14,24 @@ const DATE_RANGE_PRESETS = [
   { label: "Custom range", value: "custom" }
 ];
 
-interface DateRangeSelectorProps {
-  value: string;
-  onChange: (value: string) => void;
-}
-
 export function DateRangeSelector({ value, onChange }: DateRangeSelectorProps) {
   return (
-    <div className="space-y-2">
-      <Label value="Date Range" className="text-sm font-medium" />
-      <div className="relative max-w-[240px]"> {/* Added max-width container */}
-        <Dropdown 
-          label={DATE_RANGE_PRESETS.find(p => p.value === value)?.label || "Select date range"}
-          dismissOnClick={true}
-          color="light"
-          className="w-full [&>button]:!bg-gray-50 [&>button]:dark:!bg-gray-700 [&>button]:!border-gray-300 [&>button]:dark:!border-gray-600 [&>button]:hover:!bg-gray-100 [&>button]:dark:hover:!bg-gray-600 [&>button]:focus:!ring-4 [&>button]:focus:!ring-blue-300 [&>button]:dark:focus:!ring-blue-800"
-        >
-          <div className="py-1">
-            {DATE_RANGE_PRESETS.map((preset) => (
-              <Dropdown.Item 
-                key={preset.value}
-                onClick={() => onChange(preset.value)}
-                className={`whitespace-nowrap ${value === preset.value ? "!bg-gray-100 dark:!bg-gray-600" : ""}`}
-              >
-                {preset.label}
-              </Dropdown.Item>
-            ))}
-          </div>
-        </Dropdown>
-      </div>
+    <div>
+      <label htmlFor="dateRange" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        Date Range
+      </label>
+      <Select
+        id="dateRange"
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        className="w-full"
+      >
+        {DATE_RANGE_PRESETS.map(preset => (
+          <option key={preset.value} value={preset.value}>
+            {preset.label}
+          </option>
+        ))}
+      </Select>
     </div>
   );
 }
