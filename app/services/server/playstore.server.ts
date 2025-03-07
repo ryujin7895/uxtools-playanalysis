@@ -29,6 +29,76 @@ interface ReviewBatch {
   nextPaginationToken?: string;
 }
 
+interface AppMetadata {
+  title: string;
+  description: string;
+  summary: string;
+  installs: string;
+  minInstalls: number;
+  score: number;
+  ratings: number;
+  reviews: number;
+  price: number;
+  free: boolean;
+  currency: string;
+  size: string;
+  androidVersion: string;
+  developer: string;
+  developerEmail: string;
+  developerWebsite: string;
+  updated: Date;
+  version: string;
+  genre: string;
+  genreId: string;
+  familyGenre: string;
+  familyGenreId: string;
+  categories: string[];
+  histogram: { [key: string]: number }; // Rating distribution (1-5)
+  priceText: string;
+  contentRating: string;
+  adSupported: boolean;
+  containsAds: boolean;
+  recentChanges: string;
+  similarApps: string[];
+}
+
+interface EnhancedAnalysisResult extends AnalysisResult {
+  featureRequests: FeatureRequestAnalysis[];
+  bugReports: BugReportAnalysis[];
+  userSegments: UserSegmentAnalysis;
+  competitiveMentions: CompetitiveMention[];
+}
+
+interface FeatureRequestAnalysis {
+  feature: string;
+  count: number;
+  examples: string[];
+  averageRating: number;
+}
+
+interface BugReportAnalysis {
+  issue: string;
+  count: number;
+  examples: string[];
+  severity: 'low' | 'medium' | 'high';
+}
+
+interface UserSegmentAnalysis {
+  newUsers: Comment[];
+  powerUsers: Comment[];
+  returningUsers: Comment[];
+}
+
+interface CompetitiveMention {
+  competitor: string;
+  mentions: Comment[];
+  sentiment: {
+    positive: number;
+    negative: number;
+    neutral: number;
+  };
+}
+
 export class PlayStoreService {
   private static extractAppId(input: string): string {
     if (input.includes('id=')) {
@@ -94,6 +164,79 @@ export class PlayStoreService {
     return { sentiment, keywords };
   }
 
+  private static analyzeCommentEnhanced(text: string, score: number): {
+    sentiment: Comment['sentiment']; 
+    keywords: string[];
+    featureRequests: string[];
+    bugReports: string[];
+    competitorMentions: string[];
+    userType: 'new' | 'power' | 'returning' | 'unknown';
+  } {
+    // Existing sentiment analysis
+    const { sentiment, keywords } = this.analyzeComment(text);
+    
+    // Feature request detection
+    const featureRequestPatterns = [
+      /wish(?:ed)? (?:it |there was |you |they |had |for )(.{3,50})/i,
+      /need(?:s)? (?:to |a |an |more )(.{3,50})/i,
+      /add(?:ing)? (.{3,50}) would/i,
+      /please (?:add|include) (.{3,50})/i
+    ];
+    
+    // Bug detection
+    const bugPatterns = [
+      /(?:crash|bug|error|issue|problem)(?:es|s)? (?:with|when|during) (.{3,50})/i,
+      /(?:doesn't|does not|won't|will not|can't|cannot) (.{3,50})/i,
+      /(?:broken|not working|fails|failed) (.{3,50})/i
+    ];
+    
+    // Popular competitors to detect
+    const competitors = ['facebook', 'instagram', 'tiktok', 'snapchat', 'twitter', 'whatsapp', 'messenger', 'signal', 'telegram'];
+    
+    // User type detection
+    const newUserPatterns = ['just downloaded', 'first time', 'new to this', 'recently started'];
+    const powerUserPatterns = ['long time user', 'been using for years', 'daily user', 'power user', 'premium user'];
+    const returningUserPatterns = ['came back', 'returned to', 'giving another try', 'reinstalled'];
+    
+    // Extract feature requests
+    const featureRequests: string[] = [];
+    featureRequestPatterns.forEach(pattern => {
+      const match = text.match(pattern);
+      if (match && match[1]) featureRequests.push(match[1].trim());
+    });
+    
+    // Extract bug reports
+    const bugReports: string[] = [];
+    bugPatterns.forEach(pattern => {
+      const match = text.match(pattern);
+      if (match && match[1]) bugReports.push(match[1].trim());
+    });
+    
+    // Detect competitor mentions
+    const competitorMentions = competitors.filter(competitor => 
+      text.toLowerCase().includes(competitor)
+    );
+    
+    // Determine user type
+    let userType: 'new' | 'power' | 'returning' | 'unknown' = 'unknown';
+    if (newUserPatterns.some(pattern => text.toLowerCase().includes(pattern))) {
+      userType = 'new';
+    } else if (powerUserPatterns.some(pattern => text.toLowerCase().includes(pattern))) {
+      userType = 'power';
+    } else if (returningUserPatterns.some(pattern => text.toLowerCase().includes(pattern))) {
+      userType = 'returning';
+    }
+    
+    return {
+      sentiment,
+      keywords,
+      featureRequests,
+      bugReports,
+      competitorMentions,
+      userType
+    };
+  }
+
   private static categorizeIntention(text: string, sentiment: Comment['sentiment']): string[] {
     const intentions: string[] = [];
     const lowerText = text.toLowerCase();
@@ -120,7 +263,7 @@ export class PlayStoreService {
     return intentions;
   }
 
-  static async fetchComments(appIdOrUrl: string, dateRange: string): Promise<AnalysisResult> {
+  static async fetchComments(appIdOrUrl: string, dateRange: string): Promise<EnhancedAnalysisResult> {
     const appId = this.extractAppId(appIdOrUrl);
     const { startDate, endDate } = this.parseDateRange(dateRange);
     
@@ -179,8 +322,22 @@ export class PlayStoreService {
       };
       let sentimentCounts = { positive: 0, negative: 0, neutral: 0 };
 
+      // New data structures for enhanced analysis
+      const featureRequestMap: Map<string, {count: number, examples: string[], ratings: number[]}> = new Map();
+      const bugReportMap: Map<string, {count: number, examples: string[], ratings: number[]}> = new Map();
+      const competitorMentionsMap: Map<string, {mentions: Comment[], positive: number, negative: number, neutral: number}> = new Map();
+      const userSegments = {
+        newUsers: [] as Comment[],
+        powerUsers: [] as Comment[],
+        returningUsers: [] as Comment[]
+      };
+
       for (const review of allReviews) {
-        const { sentiment, keywords } = this.analyzeComment(review.text);
+        // Use enhanced analysis
+        const enhancedAnalysis = this.analyzeCommentEnhanced(review.text, review.score);
+        
+        // Original sentiment & keyword processing
+        const { sentiment, keywords } = enhancedAnalysis;
         
         // Count sentiment
         sentimentCounts[sentiment]++;
@@ -210,6 +367,51 @@ export class PlayStoreService {
             intentions[intention as keyof typeof intentions].push(comment);
           }
         });
+        
+        // Track user segments
+        if (enhancedAnalysis.userType === 'new') userSegments.newUsers.push(comment);
+        if (enhancedAnalysis.userType === 'power') userSegments.powerUsers.push(comment);
+        if (enhancedAnalysis.userType === 'returning') userSegments.returningUsers.push(comment);
+        
+        // Track feature requests
+        enhancedAnalysis.featureRequests.forEach(feature => {
+          if (!featureRequestMap.has(feature)) {
+            featureRequestMap.set(feature, {count: 0, examples: [], ratings: []});
+          }
+          const featureData = featureRequestMap.get(feature)!;
+          featureData.count++;
+          if (featureData.examples.length < 3) featureData.examples.push(review.text);
+          featureData.ratings.push(review.score);
+        });
+        
+        // Track bug reports
+        enhancedAnalysis.bugReports.forEach(bug => {
+          if (!bugReportMap.has(bug)) {
+            bugReportMap.set(bug, {count: 0, examples: [], ratings: []});
+          }
+          const bugData = bugReportMap.get(bug)!;
+          bugData.count++;
+          if (bugData.examples.length < 3) bugData.examples.push(review.text);
+          bugData.ratings.push(review.score);
+        });
+        
+        // Track competitor mentions
+        enhancedAnalysis.competitorMentions.forEach(competitor => {
+          if (!competitorMentionsMap.has(competitor)) {
+            competitorMentionsMap.set(competitor, {
+              mentions: [],
+              positive: 0,
+              negative: 0,
+              neutral: 0
+            });
+          }
+          
+          const mentionData = competitorMentionsMap.get(competitor)!;
+          mentionData.mentions.push(comment);
+          if (comment.sentiment === 'positive') mentionData.positive++;
+          else if (comment.sentiment === 'negative') mentionData.negative++;
+          else mentionData.neutral++;
+        });
       }
 
       // Sort keywords by frequency
@@ -217,15 +419,136 @@ export class PlayStoreService {
         .map(([word, count]) => ({ word, count }))
         .sort((a, b) => b.count - a.count)
         .slice(0, 10);
+        
+      // Process the collected data
+      const featureRequests = Array.from(featureRequestMap.entries())
+        .map(([feature, data]) => ({
+          feature,
+          count: data.count,
+          examples: data.examples,
+          averageRating: data.ratings.reduce((sum, r) => sum + r, 0) / data.ratings.length
+        }))
+        .sort((a, b) => b.count - a.count);
+      
+      const bugReports = Array.from(bugReportMap.entries())
+        .map(([issue, data]) => ({
+          issue,
+          count: data.count,
+          examples: data.examples,
+          severity: data.count > 10 ? 'high' as const : data.count > 3 ? 'medium' as const : 'low' as const
+        }))
+        .sort((a, b) => b.count - a.count);
+        
+      const competitiveMentions = Array.from(competitorMentionsMap.entries())
+        .map(([competitor, data]) => ({
+          competitor,
+          mentions: data.mentions,
+          sentiment: {
+            positive: data.positive,
+            negative: data.negative,
+            neutral: data.neutral
+          }
+        }))
+        .sort((a, b) => b.mentions.length - a.mentions.length);
 
       return {
         comments: processedComments,
         sentiment: sentimentCounts,
         keywords: sortedKeywords,
-        intentions
+        intentions,
+        featureRequests,
+        bugReports,
+        userSegments,
+        competitiveMentions
       };
     } catch (error) {
       console.error('Error fetching Play Store comments:', error);
+      throw error;
+    }
+  }
+
+  static async fetchAppMetadata(appIdOrUrl: string): Promise<AppMetadata> {
+    const appId = this.extractAppId(appIdOrUrl);
+    try {
+      return await gplay.app({ appId });
+    } catch (error) {
+      console.error('Error fetching app metadata:', error);
+      throw error;
+    }
+  }
+
+  static async fetchCompetitorData(appIdOrUrl: string): Promise<any[]> {
+    const appId = this.extractAppId(appIdOrUrl);
+    try {
+      // Get similar apps
+      const appData = await gplay.app({ appId });
+      const similarApps = appData.similarApps || [];
+      
+      // Fetch details for each similar app
+      const competitorData = await Promise.all(
+        similarApps.slice(0, 5).map(async (similarAppId: string) => {
+          try {
+            const data = await gplay.app({ appId: similarAppId });
+            return {
+              id: similarAppId,
+              title: data.title,
+              score: data.score,
+              ratings: data.ratings,
+              installs: data.installs,
+              minInstalls: data.minInstalls,
+              price: data.price,
+              free: data.free,
+              updated: data.updated,
+              version: data.version
+            };
+          } catch {
+            return null;
+          }
+        })
+      );
+      
+      return competitorData.filter(Boolean);
+    } catch (error) {
+      console.error('Error fetching competitor data:', error);
+      throw error;
+    }
+  }
+
+  static async analyzeVersionImpact(appIdOrUrl: string): Promise<any> {
+    const appId = this.extractAppId(appIdOrUrl);
+    try {
+      const reviews = await this.fetchComments(appIdOrUrl, '90days');
+      const appInfo = await this.fetchAppMetadata(appIdOrUrl);
+      
+      // Group reviews by approximate version
+      const reviewsByDate = reviews.comments.reduce((acc: any, review) => {
+        const reviewDate = new Date(review.date).toISOString().split('T')[0];
+        acc[reviewDate] = acc[reviewDate] || [];
+        acc[reviewDate].push(review);
+        return acc;
+      }, {});
+      
+      // Analyze sentiment changes over time
+      const sentimentByDate = Object.entries(reviewsByDate).map(([date, dailyReviews]) => {
+        const reviews = dailyReviews as Comment[];
+        const sentimentCounts = {
+          date,
+          positive: reviews.filter(r => r.sentiment === 'positive').length,
+          negative: reviews.filter(r => r.sentiment === 'negative').length, 
+          neutral: reviews.filter(r => r.sentiment === 'neutral').length,
+          total: reviews.length,
+          averageScore: reviews.reduce((sum, r) => sum + r.score, 0) / reviews.length
+        };
+        return sentimentCounts;
+      });
+      
+      return {
+        currentVersion: appInfo.version,
+        recentChanges: appInfo.recentChanges,
+        sentimentTrend: sentimentByDate.sort((a, b) => a.date.localeCompare(b.date))
+      };
+    } catch (error) {
+      console.error('Error analyzing version impact:', error);
       throw error;
     }
   }
