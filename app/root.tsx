@@ -1,6 +1,7 @@
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 import { ThemeProvider, initializeTheme } from "~/utils/themeProvider";
 import tailwindStyles from "./tailwind.css";
+import "~/styles/tabs.css";
 
 // Add a non-blocking script to initialize theme immediately to avoid flash
 const themeInitScript = `

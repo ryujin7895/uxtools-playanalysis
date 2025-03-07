@@ -1,12 +1,13 @@
 export interface Comment {
   id: string;
-  userName: string;
+  userName?: string;
   content: string;
+  date: string;
   score: number;
   thumbsUp: number;
-  date: string;
-  year: number;
   sentiment: 'positive' | 'negative' | 'neutral';
+  version?: string;
+  intentions?: string[]; // Add this field for comment intentions
 }
 
 export interface AnalysisResult {

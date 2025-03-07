@@ -1,0 +1,68 @@
+/* Custom tab styling with improved transitions */
+.tab-content-wrapper {
+  position: relative;
+  min-height: 200px; 
+  overflow: hidden;
+  contain: content; /* Improves performance by telling browser about content containment */
+  isolation: isolate; /* Creates a new stacking context for better z-index management */
+}
+
+/* Add a transitioning state class with better specificity */
+.tab-content-wrapper.is-transitioning {
+  /* Don't use pointer-events: none; as it blocks all interaction */
+  /* Just visually indicate transition is happening */
+  cursor: wait;
+}
+
+/* Tab panels base styling - optimized transitions */
+.tab-panel {
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  width: 100%;
+  will-change: opacity, transform; /* Hint to browser to optimize these properties */
+  transform-origin: top center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Active tab styling using data attributes for more reliable targeting */
+.tab-panel[data-active="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  position: relative;
+  z-index: 10;
+  pointer-events: all;
+  visibility: visible;
+}
+
+/* Inactive tab styling */
+.tab-panel[data-active="false"] {
+  opacity: 0;
+  transform: translateY(8px);
+  z-index: 1;
+  visibility: hidden;
+}
+
+/* Make sure tab panels in inactive state don't block interaction */
+.tab-panel[data-visible="false"] {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Tab content container always takes full width */
+.tab-content {
+  width: 100%;
+  height: 100%;
+}
+
+/* Fix to ensure we never lose interaction ability */
+.tab-panel button,
+.tab-panel a,
+.tab-panel [role="button"] {
+  position: relative; /* Ensures elements stay above any potential stacking issues */
+  z-index: 5; /* Higher than surrounding elements */
+}
