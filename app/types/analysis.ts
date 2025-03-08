@@ -35,6 +35,13 @@ export interface AnalysisResult {
     word: string;
     count: number;
   }[];
+  trends?: {
+    date: string;
+    positive: number;
+    negative: number;
+    neutral: number;
+    total: number;
+  }[];
 }
 
 export interface EnhancedAnalysisResult extends AnalysisResult {

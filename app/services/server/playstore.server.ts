@@ -1,4 +1,5 @@
 import type { AnalysisResult, Comment } from '~/types/analysis';
+import { generateTrendData } from '~/utils/trendAnalysis';
 
 // @ts-ignore
 const gplayModule = require('google-play-scraper');
@@ -67,6 +68,7 @@ interface EnhancedAnalysisResult extends AnalysisResult {
   bugReports: BugReportAnalysis[];
   userSegments: UserSegmentAnalysis;
   competitiveMentions: CompetitiveMention[];
+  trends: any; // Add trends to the result
 }
 
 interface FeatureRequestAnalysis {
@@ -451,6 +453,9 @@ export class PlayStoreService {
         }))
         .sort((a, b) => b.mentions.length - a.mentions.length);
 
+      // Generate trend data using the utility function
+      const trends = generateTrendData(processedComments, 6);
+
       return {
         comments: processedComments,
         sentiment: sentimentCounts,
@@ -459,7 +464,8 @@ export class PlayStoreService {
         featureRequests,
         bugReports,
         userSegments,
-        competitiveMentions
+        competitiveMentions,
+        trends // Add trend data to the result
       };
     } catch (error) {
       console.error('Error fetching Play Store comments:', error);
@@ -542,10 +548,22 @@ export class PlayStoreService {
         return sentimentCounts;
       });
       
+      // Ensure trends data format is consistent with our TrendAnalysis component
+      const trends = sentimentByDate
+        .sort((a, b) => a.date.localeCompare(b.date))
+        .map(item => ({
+          date: item.date,
+          positive: item.positive,
+          negative: item.negative,
+          neutral: item.neutral,
+          total: item.total
+        }));
+      
       return {
         currentVersion: appInfo.version,
         recentChanges: appInfo.recentChanges,
-        sentimentTrend: sentimentByDate.sort((a, b) => a.date.localeCompare(b.date))
+        sentimentTrend: sentimentByDate.sort((a, b) => a.date.localeCompare(b.date)),
+        trends // Add trends in the format expected by TrendAnalysis component
       };
     } catch (error) {
       console.error('Error analyzing version impact:', error);
