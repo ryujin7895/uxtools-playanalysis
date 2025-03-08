@@ -12057,9 +12057,9 @@ function ChatBubbleLeftIcon({
 var ForwardRef5 = /* @__PURE__ */ React10.forwardRef(ChatBubbleLeftIcon);
 var ChatBubbleLeftIcon_default = ForwardRef5;
 
-// node_modules/@heroicons/react/24/outline/esm/ChevronLeftIcon.js
+// node_modules/@heroicons/react/24/outline/esm/ChevronDownIcon.js
 var React11 = __toESM(require_react(), 1);
-function ChevronLeftIcon({
+function ChevronDownIcon({
   title,
   titleId,
   ...props
@@ -12079,15 +12079,15 @@ function ChevronLeftIcon({
   }, title) : null, /* @__PURE__ */ React11.createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
-    d: "M15.75 19.5 8.25 12l7.5-7.5"
+    d: "m19.5 8.25-7.5 7.5-7.5-7.5"
   }));
 }
-var ForwardRef6 = /* @__PURE__ */ React11.forwardRef(ChevronLeftIcon);
-var ChevronLeftIcon_default = ForwardRef6;
+var ForwardRef6 = /* @__PURE__ */ React11.forwardRef(ChevronDownIcon);
+var ChevronDownIcon_default = ForwardRef6;
 
-// node_modules/@heroicons/react/24/outline/esm/ChevronRightIcon.js
+// node_modules/@heroicons/react/24/outline/esm/ChevronLeftIcon.js
 var React12 = __toESM(require_react(), 1);
-function ChevronRightIcon({
+function ChevronLeftIcon({
   title,
   titleId,
   ...props
@@ -12107,15 +12107,15 @@ function ChevronRightIcon({
   }, title) : null, /* @__PURE__ */ React12.createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
-    d: "m8.25 4.5 7.5 7.5-7.5 7.5"
+    d: "M15.75 19.5 8.25 12l7.5-7.5"
   }));
 }
-var ForwardRef7 = /* @__PURE__ */ React12.forwardRef(ChevronRightIcon);
-var ChevronRightIcon_default = ForwardRef7;
+var ForwardRef7 = /* @__PURE__ */ React12.forwardRef(ChevronLeftIcon);
+var ChevronLeftIcon_default = ForwardRef7;
 
-// node_modules/@heroicons/react/24/outline/esm/InformationCircleIcon.js
+// node_modules/@heroicons/react/24/outline/esm/ChevronRightIcon.js
 var React13 = __toESM(require_react(), 1);
-function InformationCircleIcon({
+function ChevronRightIcon({
   title,
   titleId,
   ...props
@@ -12135,15 +12135,15 @@ function InformationCircleIcon({
   }, title) : null, /* @__PURE__ */ React13.createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
-    d: "m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+    d: "m8.25 4.5 7.5 7.5-7.5 7.5"
   }));
 }
-var ForwardRef8 = /* @__PURE__ */ React13.forwardRef(InformationCircleIcon);
-var InformationCircleIcon_default = ForwardRef8;
+var ForwardRef8 = /* @__PURE__ */ React13.forwardRef(ChevronRightIcon);
+var ChevronRightIcon_default = ForwardRef8;
 
-// node_modules/@heroicons/react/24/outline/esm/MagnifyingGlassIcon.js
+// node_modules/@heroicons/react/24/outline/esm/ChevronUpIcon.js
 var React14 = __toESM(require_react(), 1);
-function MagnifyingGlassIcon({
+function ChevronUpIcon({
   title,
   titleId,
   ...props
@@ -12163,15 +12163,15 @@ function MagnifyingGlassIcon({
   }, title) : null, /* @__PURE__ */ React14.createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
-    d: "m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+    d: "m4.5 15.75 7.5-7.5 7.5 7.5"
   }));
 }
-var ForwardRef9 = /* @__PURE__ */ React14.forwardRef(MagnifyingGlassIcon);
-var MagnifyingGlassIcon_default = ForwardRef9;
+var ForwardRef9 = /* @__PURE__ */ React14.forwardRef(ChevronUpIcon);
+var ChevronUpIcon_default = ForwardRef9;
 
-// node_modules/@heroicons/react/24/outline/esm/MinusIcon.js
+// node_modules/@heroicons/react/24/outline/esm/InformationCircleIcon.js
 var React15 = __toESM(require_react(), 1);
-function MinusIcon({
+function InformationCircleIcon({
   title,
   titleId,
   ...props
@@ -12191,15 +12191,15 @@ function MinusIcon({
   }, title) : null, /* @__PURE__ */ React15.createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
-    d: "M5 12h14"
+    d: "m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
   }));
 }
-var ForwardRef10 = /* @__PURE__ */ React15.forwardRef(MinusIcon);
-var MinusIcon_default = ForwardRef10;
+var ForwardRef10 = /* @__PURE__ */ React15.forwardRef(InformationCircleIcon);
+var InformationCircleIcon_default = ForwardRef10;
 
-// node_modules/@heroicons/react/24/outline/esm/MoonIcon.js
+// node_modules/@heroicons/react/24/outline/esm/MagnifyingGlassIcon.js
 var React16 = __toESM(require_react(), 1);
-function MoonIcon({
+function MagnifyingGlassIcon({
   title,
   titleId,
   ...props
@@ -12219,15 +12219,15 @@ function MoonIcon({
   }, title) : null, /* @__PURE__ */ React16.createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
-    d: "M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
+    d: "m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
   }));
 }
-var ForwardRef11 = /* @__PURE__ */ React16.forwardRef(MoonIcon);
-var MoonIcon_default = ForwardRef11;
+var ForwardRef11 = /* @__PURE__ */ React16.forwardRef(MagnifyingGlassIcon);
+var MagnifyingGlassIcon_default = ForwardRef11;
 
-// node_modules/@heroicons/react/24/outline/esm/PlusIcon.js
+// node_modules/@heroicons/react/24/outline/esm/MinusIcon.js
 var React17 = __toESM(require_react(), 1);
-function PlusIcon({
+function MinusIcon({
   title,
   titleId,
   ...props
@@ -12247,15 +12247,15 @@ function PlusIcon({
   }, title) : null, /* @__PURE__ */ React17.createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
-    d: "M12 4.5v15m7.5-7.5h-15"
+    d: "M5 12h14"
   }));
 }
-var ForwardRef12 = /* @__PURE__ */ React17.forwardRef(PlusIcon);
-var PlusIcon_default = ForwardRef12;
+var ForwardRef12 = /* @__PURE__ */ React17.forwardRef(MinusIcon);
+var MinusIcon_default = ForwardRef12;
 
-// node_modules/@heroicons/react/24/outline/esm/SunIcon.js
+// node_modules/@heroicons/react/24/outline/esm/MoonIcon.js
 var React18 = __toESM(require_react(), 1);
-function SunIcon({
+function MoonIcon({
   title,
   titleId,
   ...props
@@ -12275,15 +12275,15 @@ function SunIcon({
   }, title) : null, /* @__PURE__ */ React18.createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
-    d: "M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+    d: "M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
   }));
 }
-var ForwardRef13 = /* @__PURE__ */ React18.forwardRef(SunIcon);
-var SunIcon_default = ForwardRef13;
+var ForwardRef13 = /* @__PURE__ */ React18.forwardRef(MoonIcon);
+var MoonIcon_default = ForwardRef13;
 
-// node_modules/@heroicons/react/24/outline/esm/XMarkIcon.js
+// node_modules/@heroicons/react/24/outline/esm/PlusIcon.js
 var React19 = __toESM(require_react(), 1);
-function XMarkIcon({
+function PlusIcon({
   title,
   titleId,
   ...props
@@ -12303,11 +12303,67 @@ function XMarkIcon({
   }, title) : null, /* @__PURE__ */ React19.createElement("path", {
     strokeLinecap: "round",
     strokeLinejoin: "round",
+    d: "M12 4.5v15m7.5-7.5h-15"
+  }));
+}
+var ForwardRef14 = /* @__PURE__ */ React19.forwardRef(PlusIcon);
+var PlusIcon_default = ForwardRef14;
+
+// node_modules/@heroicons/react/24/outline/esm/SunIcon.js
+var React20 = __toESM(require_react(), 1);
+function SunIcon({
+  title,
+  titleId,
+  ...props
+}, svgRef) {
+  return /* @__PURE__ */ React20.createElement("svg", Object.assign({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    strokeWidth: 1.5,
+    stroke: "currentColor",
+    "aria-hidden": "true",
+    "data-slot": "icon",
+    ref: svgRef,
+    "aria-labelledby": titleId
+  }, props), title ? /* @__PURE__ */ React20.createElement("title", {
+    id: titleId
+  }, title) : null, /* @__PURE__ */ React20.createElement("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    d: "M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+  }));
+}
+var ForwardRef15 = /* @__PURE__ */ React20.forwardRef(SunIcon);
+var SunIcon_default = ForwardRef15;
+
+// node_modules/@heroicons/react/24/outline/esm/XMarkIcon.js
+var React21 = __toESM(require_react(), 1);
+function XMarkIcon({
+  title,
+  titleId,
+  ...props
+}, svgRef) {
+  return /* @__PURE__ */ React21.createElement("svg", Object.assign({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    strokeWidth: 1.5,
+    stroke: "currentColor",
+    "aria-hidden": "true",
+    "data-slot": "icon",
+    ref: svgRef,
+    "aria-labelledby": titleId
+  }, props), title ? /* @__PURE__ */ React21.createElement("title", {
+    id: titleId
+  }, title) : null, /* @__PURE__ */ React21.createElement("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
     d: "M6 18 18 6M6 6l12 12"
   }));
 }
-var ForwardRef14 = /* @__PURE__ */ React19.forwardRef(XMarkIcon);
-var XMarkIcon_default = ForwardRef14;
+var ForwardRef16 = /* @__PURE__ */ React21.forwardRef(XMarkIcon);
+var XMarkIcon_default = ForwardRef16;
 
 // app/components/common/AppInput.tsx
 var import_jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
@@ -12563,7 +12619,7 @@ window.$RefreshReg$ = prevRefreshReg;
 window.$RefreshSig$ = prevRefreshSig;
 
 // app/components/analysis/AnalysisResults.tsx
-var import_react69 = __toESM(require_react(), 1);
+var import_react70 = __toESM(require_react(), 1);
 
 // app/components/analysis/AnalysisHeader.tsx
 var import_jsx_dev_runtime4 = __toESM(require_jsx_dev_runtime(), 1);
@@ -25135,6 +25191,7 @@ function createTypedChart(type, registerables) {
 var Line = /* @__PURE__ */ createTypedChart("line", LineController);
 
 // app/components/analysis/AnalysisOverview.tsx
+var import_react68 = __toESM(require_react(), 1);
 var import_jsx_dev_runtime6 = __toESM(require_jsx_dev_runtime(), 1);
 if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
   console.warn("remix:hmr: React Fast Refresh only works when the Remix compiler is running in development mode.");
@@ -25148,94 +25205,126 @@ if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
 }
 var prevRefreshReg;
 var prevRefreshSig;
+var _s2 = $RefreshSig$();
+var _s22 = $RefreshSig$();
 if (import.meta) {
   import.meta.hot = createHotContext(
     //@ts-expect-error
     "app/components/analysis/AnalysisOverview.tsx"
   );
-  import.meta.hot.lastModified = "1741428301769.7524";
+  import.meta.hot.lastModified = "1741429205988.537";
 }
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, plugin_title, plugin_tooltip, plugin_legend, index3);
 var SummaryCard = ({
   title,
   count: count2,
   color: color2
-}) => /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Card, { className: "shadow-sm", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "text-center", children: [
+}) => /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Card, { className: "shadow-sm hover:shadow-md transition-shadow", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "text-center", children: [
   /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: `text-2xl font-bold text-${color2}-600`, children: count2 }, void 0, false, {
     fileName: "app/components/analysis/AnalysisOverview.tsx",
-    lineNumber: 32,
+    lineNumber: 35,
     columnNumber: 7
   }, this),
   /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "text-sm text-gray-500", children: title }, void 0, false, {
     fileName: "app/components/analysis/AnalysisOverview.tsx",
-    lineNumber: 35,
+    lineNumber: 38,
     columnNumber: 7
   }, this)
 ] }, void 0, true, {
   fileName: "app/components/analysis/AnalysisOverview.tsx",
-  lineNumber: 31,
+  lineNumber: 34,
   columnNumber: 5
 }, this) }, void 0, false, {
   fileName: "app/components/analysis/AnalysisOverview.tsx",
-  lineNumber: 30,
+  lineNumber: 33,
   columnNumber: 7
 }, this);
 _c6 = SummaryCard;
 var SentimentCard = ({
   label,
   count: count2,
-  color: color2
-}) => /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "text-center", children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: `text-2xl font-bold text-${color2}-600`, children: count2 }, void 0, false, {
-    fileName: "app/components/analysis/AnalysisOverview.tsx",
-    lineNumber: 44,
-    columnNumber: 5
-  }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "text-sm text-gray-500", children: label }, void 0, false, {
-    fileName: "app/components/analysis/AnalysisOverview.tsx",
-    lineNumber: 47,
-    columnNumber: 5
-  }, this)
-] }, void 0, true, {
-  fileName: "app/components/analysis/AnalysisOverview.tsx",
-  lineNumber: 43,
-  columnNumber: 7
-}, this);
-_c22 = SentimentCard;
-var SentimentDistribution = ({
-  data
-}) => /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Card, { className: "shadow-sm p-4", children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-lg font-semibold mb-4", children: "Sentiment Distribution" }, void 0, false, {
-    fileName: "app/components/analysis/AnalysisOverview.tsx",
-    lineNumber: 53,
-    columnNumber: 5
-  }, this),
-  /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex justify-around", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SentimentCard, { label: "Positive", count: data.sentiment.positive, color: "green" }, void 0, false, {
+  color: color2,
+  total
+}) => {
+  const percentage = total > 0 ? Math.round(count2 / total * 100) : 0;
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "w-full", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex justify-between items-center mb-1", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("span", { className: "text-sm font-medium text-gray-700", children: label }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 53,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("span", { className: "text-sm font-medium text-gray-700", children: [
+        count2,
+        " (",
+        percentage,
+        "%)"
+      ] }, void 0, true, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 54,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisOverview.tsx",
-      lineNumber: 55,
+      lineNumber: 52,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SentimentCard, { label: "Neutral", count: data.sentiment.neutral, color: "yellow" }, void 0, false, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Progress, { progress: percentage, color: color2, size: "sm", className: "mb-2" }, void 0, false, {
       fileName: "app/components/analysis/AnalysisOverview.tsx",
       lineNumber: 56,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SentimentCard, { label: "Negative", count: data.sentiment.negative, color: "red" }, void 0, false, {
-      fileName: "app/components/analysis/AnalysisOverview.tsx",
-      lineNumber: 57,
       columnNumber: 7
     }, this)
   ] }, void 0, true, {
     fileName: "app/components/analysis/AnalysisOverview.tsx",
-    lineNumber: 54,
-    columnNumber: 5
-  }, this)
-] }, void 0, true, {
-  fileName: "app/components/analysis/AnalysisOverview.tsx",
-  lineNumber: 52,
-  columnNumber: 7
-}, this);
+    lineNumber: 51,
+    columnNumber: 10
+  }, this);
+};
+_c22 = SentimentCard;
+var SentimentDistribution = ({
+  data
+}) => {
+  const total = data.sentiment.positive + data.sentiment.neutral + data.sentiment.negative;
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Card, { className: "shadow-sm hover:shadow-md transition-shadow", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-lg font-semibold mb-4 flex items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(ChartPieIcon_default, { className: "w-5 h-5 mr-2 text-blue-600" }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 66,
+        columnNumber: 9
+      }, this),
+      "Sentiment Distribution"
+    ] }, void 0, true, {
+      fileName: "app/components/analysis/AnalysisOverview.tsx",
+      lineNumber: 65,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "space-y-2", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SentimentCard, { label: "Positive", count: data.sentiment.positive, color: "success", total }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 70,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SentimentCard, { label: "Neutral", count: data.sentiment.neutral, color: "warning", total }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 71,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SentimentCard, { label: "Negative", count: data.sentiment.negative, color: "failure", total }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 72,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "app/components/analysis/AnalysisOverview.tsx",
+      lineNumber: 69,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "app/components/analysis/AnalysisOverview.tsx",
+    lineNumber: 64,
+    columnNumber: 10
+  }, this);
+};
 _c32 = SentimentDistribution;
 var chartColors = [
   {
@@ -25262,9 +25351,11 @@ var chartColors = [
 var TrendAnalysis = ({
   data
 }) => {
+  _s2();
   const hasTrendsData = data.trends && Array.isArray(data.trends) && data.trends.length > 0;
   if (!hasTrendsData)
     return null;
+  const [isExpanded, setIsExpanded] = (0, import_react68.useState)(true);
   const chartData = {
     labels: data.trends.map((trend) => new Date(trend.date).toLocaleDateString()),
     datasets: [{
@@ -25380,37 +25471,93 @@ var TrendAnalysis = ({
       }
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Card, { className: "mt-6", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-lg font-medium mb-1 text-gray-800 dark:text-white", children: "Trend Analysis" }, void 0, false, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Card, { className: "mt-6 hover:shadow-md transition-shadow", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex justify-between items-center cursor-pointer mb-1", onClick: () => setIsExpanded(!isExpanded), children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-lg font-medium text-gray-800 dark:text-white", children: "Trend Analysis" }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 227,
+        columnNumber: 11
+      }, this),
+      isExpanded ? /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(ChevronUpIcon_default, { className: "w-5 h-5 text-gray-500" }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 230,
+        columnNumber: 25
+      }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(ChevronDownIcon_default, { className: "w-5 h-5 text-gray-500" }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 230,
+        columnNumber: 79
+      }, this)
+    ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisOverview.tsx",
-      lineNumber: 206,
+      lineNumber: 226,
       columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("p", { className: "text-sm text-gray-600 dark:text-gray-400 mb-4", children: "Review volume trends over time" }, void 0, false, {
       fileName: "app/components/analysis/AnalysisOverview.tsx",
-      lineNumber: 209,
+      lineNumber: 232,
       columnNumber: 9
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "h-[400px]", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Line, { data: chartData, options }, void 0, false, {
+    isExpanded && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "h-[300px] md:h-[400px]", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Line, { data: chartData, options }, void 0, false, {
       fileName: "app/components/analysis/AnalysisOverview.tsx",
-      lineNumber: 214,
-      columnNumber: 11
+      lineNumber: 237,
+      columnNumber: 13
     }, this) }, void 0, false, {
       fileName: "app/components/analysis/AnalysisOverview.tsx",
-      lineNumber: 213,
-      columnNumber: 9
+      lineNumber: 236,
+      columnNumber: 24
     }, this)
   ] }, void 0, true, {
     fileName: "app/components/analysis/AnalysisOverview.tsx",
-    lineNumber: 205,
+    lineNumber: 225,
     columnNumber: 7
   }, this) }, void 0, false, {
     fileName: "app/components/analysis/AnalysisOverview.tsx",
-    lineNumber: 204,
+    lineNumber: 224,
     columnNumber: 10
   }, this);
 };
+_s2(TrendAnalysis, "MzqrZ0LJxgqPa6EOF1Vxw0pgYA4=");
 _c42 = TrendAnalysis;
+var CollapsibleCard = ({
+  title,
+  icon,
+  children
+}) => {
+  _s22();
+  const [isExpanded, setIsExpanded] = (0, import_react68.useState)(true);
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Card, { className: "shadow-sm hover:shadow-md transition-shadow", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex justify-between items-center cursor-pointer mb-4", onClick: () => setIsExpanded(!isExpanded), children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-lg font-semibold flex items-center", children: [
+        icon,
+        title
+      ] }, void 0, true, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 255,
+        columnNumber: 9
+      }, this),
+      isExpanded ? /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(ChevronUpIcon_default, { className: "w-5 h-5 text-gray-500" }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 259,
+        columnNumber: 23
+      }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(ChevronDownIcon_default, { className: "w-5 h-5 text-gray-500" }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 259,
+        columnNumber: 77
+      }, this)
+    ] }, void 0, true, {
+      fileName: "app/components/analysis/AnalysisOverview.tsx",
+      lineNumber: 254,
+      columnNumber: 7
+    }, this),
+    isExpanded && children
+  ] }, void 0, true, {
+    fileName: "app/components/analysis/AnalysisOverview.tsx",
+    lineNumber: 253,
+    columnNumber: 10
+  }, this);
+};
+_s22(CollapsibleCard, "MzqrZ0LJxgqPa6EOF1Vxw0pgYA4=");
+_c52 = CollapsibleCard;
 function AnalysisOverview({
   result,
   comparisonResults
@@ -25418,137 +25565,117 @@ function AnalysisOverview({
   const enhancedResult = result;
   const enhancedComparisonResults = comparisonResults;
   const isComparisonMode = !!comparisonResults?.length;
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "grid grid-cols-1 lg:grid-cols-3 gap-6", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "lg:col-span-2 space-y-6", children: [
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-6", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "lg:col-span-8 space-y-6", children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "grid grid-cols-2 sm:grid-cols-4 gap-4", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SummaryCard, { title: "Feature Requests", count: result.intentions.feature_request.length, color: "blue" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisOverview.tsx",
-          lineNumber: 232,
+          lineNumber: 279,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SummaryCard, { title: "Bug Reports", count: result.intentions.bug_report.length, color: "red" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisOverview.tsx",
-          lineNumber: 233,
+          lineNumber: 280,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SummaryCard, { title: "Praise", count: result.intentions.praise.length, color: "green" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisOverview.tsx",
-          lineNumber: 234,
+          lineNumber: 281,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SummaryCard, { title: "Complaints", count: result.intentions.complaint.length, color: "yellow" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisOverview.tsx",
-          lineNumber: 235,
+          lineNumber: 282,
           columnNumber: 11
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisOverview.tsx",
-        lineNumber: 231,
+        lineNumber: 278,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SentimentDistribution, { data: result }, void 0, false, {
         fileName: "app/components/analysis/AnalysisOverview.tsx",
-        lineNumber: 239,
+        lineNumber: 286,
         columnNumber: 9
       }, this),
-      comparisonResults?.map((compResult, index4) => /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Card, { className: "shadow-sm", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-lg font-semibold flex items-center mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(ChartPieIcon_default, { className: "w-5 h-5 mr-2 text-blue-600" }, void 0, false, {
-            fileName: "app/components/analysis/AnalysisOverview.tsx",
-            lineNumber: 244,
-            columnNumber: 15
-          }, this),
-          "Comparison App ",
-          index4 + 1,
-          " Sentiment Analysis"
-        ] }, void 0, true, {
-          fileName: "app/components/analysis/AnalysisOverview.tsx",
-          lineNumber: 243,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SentimentDistribution, { data: compResult }, void 0, false, {
-          fileName: "app/components/analysis/AnalysisOverview.tsx",
-          lineNumber: 247,
-          columnNumber: 13
-        }, this)
-      ] }, index4, true, {
+      comparisonResults?.map((compResult, index4) => /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(CollapsibleCard, { title: `Comparison App ${index4 + 1} Sentiment Analysis`, icon: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(ChartPieIcon_default, { className: "w-5 h-5 mr-2 text-blue-600" }, void 0, false, {
         fileName: "app/components/analysis/AnalysisOverview.tsx",
-        lineNumber: 242,
+        lineNumber: 289,
+        columnNumber: 148
+      }, this), children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(SentimentDistribution, { data: compResult }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 290,
+        columnNumber: 13
+      }, this) }, index4, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 289,
         columnNumber: 56
       }, this))
     ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisOverview.tsx",
-      lineNumber: 229,
+      lineNumber: 276,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "space-y-6", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Card, { className: "shadow-sm", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-lg font-semibold flex items-center mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(ChatBubbleLeftIcon_default, { className: "w-5 h-5 mr-2 text-blue-600" }, void 0, false, {
-            fileName: "app/components/analysis/AnalysisOverview.tsx",
-            lineNumber: 255,
-            columnNumber: 13
-          }, this),
-          "Top Keywords"
-        ] }, void 0, true, {
-          fileName: "app/components/analysis/AnalysisOverview.tsx",
-          lineNumber: 254,
-          columnNumber: 11
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex flex-wrap gap-2", children: result.keywords.map(({
-          word,
-          count: count2
-        }) => /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Badge, { color: "info", className: "text-sm py-1.5", children: [
-          word,
-          " (",
-          count2,
-          ")"
-        ] }, word, true, {
-          fileName: "app/components/analysis/AnalysisOverview.tsx",
-          lineNumber: 262,
-          columnNumber: 17
-        }, this)) }, void 0, false, {
-          fileName: "app/components/analysis/AnalysisOverview.tsx",
-          lineNumber: 258,
-          columnNumber: 11
-        }, this)
-      ] }, void 0, true, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "lg:col-span-4 space-y-6", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(CollapsibleCard, { title: "Top Keywords", icon: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(ChatBubbleLeftIcon_default, { className: "w-5 h-5 mr-2 text-blue-600" }, void 0, false, {
         fileName: "app/components/analysis/AnalysisOverview.tsx",
-        lineNumber: 253,
+        lineNumber: 296,
+        columnNumber: 53
+      }, this), children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex flex-wrap gap-2", children: result.keywords.map(({
+        word,
+        count: count2
+      }) => /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Badge, { color: "info", className: "text-sm py-1.5", children: [
+        word,
+        " (",
+        count2,
+        ")"
+      ] }, word, true, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 301,
+        columnNumber: 17
+      }, this)) }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 297,
+        columnNumber: 11
+      }, this) }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisOverview.tsx",
+        lineNumber: 296,
         columnNumber: 9
       }, this),
       result.trends && result.trends.length > 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(TrendAnalysis, { data: result }, void 0, false, {
         fileName: "app/components/analysis/AnalysisOverview.tsx",
-        lineNumber: 269,
+        lineNumber: 308,
         columnNumber: 55
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisOverview.tsx",
-      lineNumber: 252,
+      lineNumber: 295,
       columnNumber: 7
     }, this)
   ] }, void 0, true, {
     fileName: "app/components/analysis/AnalysisOverview.tsx",
-    lineNumber: 227,
+    lineNumber: 274,
     columnNumber: 10
   }, this);
 }
-_c52 = AnalysisOverview;
+_c62 = AnalysisOverview;
 var _c6;
 var _c22;
 var _c32;
 var _c42;
 var _c52;
+var _c62;
 $RefreshReg$(_c6, "SummaryCard");
 $RefreshReg$(_c22, "SentimentCard");
 $RefreshReg$(_c32, "SentimentDistribution");
 $RefreshReg$(_c42, "TrendAnalysis");
-$RefreshReg$(_c52, "AnalysisOverview");
+$RefreshReg$(_c52, "CollapsibleCard");
+$RefreshReg$(_c62, "AnalysisOverview");
 window.$RefreshReg$ = prevRefreshReg;
 window.$RefreshSig$ = prevRefreshSig;
 
 // app/components/analysis/AnalysisComments.tsx
-var import_react68 = __toESM(require_react(), 1);
+var import_react69 = __toESM(require_react(), 1);
 var import_jsx_dev_runtime7 = __toESM(require_jsx_dev_runtime(), 1);
 if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
   console.warn("remix:hmr: React Fast Refresh only works when the Remix compiler is running in development mode.");
@@ -25562,7 +25689,7 @@ if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
 }
 var prevRefreshReg;
 var prevRefreshSig;
-var _s2 = $RefreshSig$();
+var _s3 = $RefreshSig$();
 if (import.meta) {
   import.meta.hot = createHotContext(
     //@ts-expect-error
@@ -25573,19 +25700,19 @@ if (import.meta) {
 function AnalysisComments({
   result
 }) {
-  _s2();
-  const [searchQuery, setSearchQuery] = (0, import_react68.useState)("");
-  const [sentimentFilter, setSentimentFilter] = (0, import_react68.useState)(null);
-  const [ratingFilter, setRatingFilter] = (0, import_react68.useState)(null);
-  const [currentPage, setCurrentPage] = (0, import_react68.useState)(1);
-  const [searchFocused, setSearchFocused] = (0, import_react68.useState)(false);
-  const [filterOpen, setFilterOpen] = (0, import_react68.useState)(false);
-  const [isAnyFilterActive, setIsAnyFilterActive] = (0, import_react68.useState)(false);
+  _s3();
+  const [searchQuery, setSearchQuery] = (0, import_react69.useState)("");
+  const [sentimentFilter, setSentimentFilter] = (0, import_react69.useState)(null);
+  const [ratingFilter, setRatingFilter] = (0, import_react69.useState)(null);
+  const [currentPage, setCurrentPage] = (0, import_react69.useState)(1);
+  const [searchFocused, setSearchFocused] = (0, import_react69.useState)(false);
+  const [filterOpen, setFilterOpen] = (0, import_react69.useState)(false);
+  const [isAnyFilterActive, setIsAnyFilterActive] = (0, import_react69.useState)(false);
   const commentsPerPage = 5;
-  (0, import_react68.useEffect)(() => {
+  (0, import_react69.useEffect)(() => {
     setIsAnyFilterActive(!!searchQuery || sentimentFilter !== null || ratingFilter !== null);
   }, [searchQuery, sentimentFilter, ratingFilter]);
-  const filteredComments = (0, import_react68.useMemo)(() => {
+  const filteredComments = (0, import_react69.useMemo)(() => {
     let filtered = [...result.comments];
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
@@ -25599,7 +25726,7 @@ function AnalysisComments({
     }
     return filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [result.comments, searchQuery, sentimentFilter, ratingFilter]);
-  const sentimentCounts = (0, import_react68.useMemo)(() => {
+  const sentimentCounts = (0, import_react69.useMemo)(() => {
     const counts = {
       positive: 0,
       negative: 0,
@@ -25610,7 +25737,7 @@ function AnalysisComments({
     });
     return counts;
   }, [result.comments]);
-  const ratingCounts = (0, import_react68.useMemo)(() => {
+  const ratingCounts = (0, import_react69.useMemo)(() => {
     const counts = {
       1: 0,
       2: 0,
@@ -26223,7 +26350,7 @@ function AnalysisComments({
     columnNumber: 10
   }, this);
 }
-_s2(AnalysisComments, "mO1onNmQM+fT0wvyCG4dMSaNCe0=");
+_s3(AnalysisComments, "mO1onNmQM+fT0wvyCG4dMSaNCe0=");
 _c7 = AnalysisComments;
 var _c7;
 $RefreshReg$(_c7, "AnalysisComments");
@@ -26244,7 +26371,7 @@ if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
 }
 var prevRefreshReg;
 var prevRefreshSig;
-var _s3 = $RefreshSig$();
+var _s4 = $RefreshSig$();
 if (import.meta) {
   import.meta.hot = createHotContext(
     //@ts-expect-error
@@ -26258,8 +26385,8 @@ function AnalysisResults({
   result,
   comparisonResults
 }) {
-  _s3();
-  const [currentView, setCurrentView] = (0, import_react69.useState)("overview");
+  _s4();
+  const [currentView, setCurrentView] = (0, import_react70.useState)("overview");
   const enhancedResult = result;
   const enhancedComparisonResults = comparisonResults;
   const isComparisonMode = !!comparisonResults?.length;
@@ -26308,7 +26435,7 @@ function AnalysisResults({
     columnNumber: 10
   }, this);
 }
-_s3(AnalysisResults, "sr+sCgzYw0YbQDYqS8FaHarLCfY=");
+_s4(AnalysisResults, "sr+sCgzYw0YbQDYqS8FaHarLCfY=");
 _c8 = AnalysisResults;
 var _c8;
 $RefreshReg$(_c8, "AnalysisResults");
@@ -26368,4 +26495,4 @@ chart.js/dist/chart.js:
    * Released under the MIT License
    *)
 */
-//# sourceMappingURL=/build/_shared/chunk-DTTWGRVJ.js.map
+//# sourceMappingURL=/build/_shared/chunk-2N2IWX46.js.map

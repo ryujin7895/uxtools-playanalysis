@@ -1,7 +1,9 @@
-import { Card, Badge } from "flowbite-react";
+import { Card, Badge, Progress } from "flowbite-react";
 import { 
   ChartPieIcon, 
-  ChatBubbleLeftIcon
+  ChatBubbleLeftIcon,
+  ChevronDownIcon,
+  ChevronUpIcon
 } from '@heroicons/react/24/outline';
 import { Line } from "react-chartjs-2";
 import {
@@ -18,6 +20,7 @@ import {
   Filler
 } from 'chart.js';
 import type { EnhancedAnalysisProps, AnalysisResult, EnhancedAnalysisResult } from "~/types/analysis";
+import { useState } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -31,7 +34,7 @@ ChartJS.register(
 );
 
 const SummaryCard = ({ title, count, color }: { title: string; count: number; color: string }) => (
-  <Card className="shadow-sm">
+  <Card className="shadow-sm hover:shadow-md transition-shadow">
     <div className="text-center">
       <div className={`text-2xl font-bold text-${color}-600`}>
         {count}
@@ -41,25 +44,43 @@ const SummaryCard = ({ title, count, color }: { title: string; count: number; co
   </Card>
 );
 
-const SentimentCard = ({ label, count, color }: { label: string; count: number; color: string }) => (
-  <div className="text-center">
-    <div className={`text-2xl font-bold text-${color}-600`}>
-      {count}
+// Redesigned SentimentCard with progress bar for better visual representation
+const SentimentCard = ({ label, count, color, total }: { label: string; count: number; color: string; total: number }) => {
+  const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
+  
+  return (
+    <div className="w-full">
+      <div className="flex justify-between items-center mb-1">
+        <span className="text-sm font-medium text-gray-700">{label}</span>
+        <span className="text-sm font-medium text-gray-700">{count} ({percentage}%)</span>
+      </div>
+      <Progress
+        progress={percentage}
+        color={color as "success" | "warning" | "failure"}
+        size="sm"
+        className="mb-2"
+      />
     </div>
-    <div className="text-sm text-gray-500">{label}</div>
-  </div>
-);
+  );
+};
 
-const SentimentDistribution = ({ data }: { data: AnalysisResult }) => (
-  <Card className="shadow-sm p-4">
-    <h3 className="text-lg font-semibold mb-4">Sentiment Distribution</h3>
-    <div className="flex justify-around">
-      <SentimentCard label="Positive" count={data.sentiment.positive} color="green" />
-      <SentimentCard label="Neutral" count={data.sentiment.neutral} color="yellow" />
-      <SentimentCard label="Negative" count={data.sentiment.negative} color="red" />
-    </div>
-  </Card>
-);
+const SentimentDistribution = ({ data }: { data: AnalysisResult }) => {
+  const total = data.sentiment.positive + data.sentiment.neutral + data.sentiment.negative;
+  
+  return (
+    <Card className="shadow-sm hover:shadow-md transition-shadow">
+      <h3 className="text-lg font-semibold mb-4 flex items-center">
+        <ChartPieIcon className="w-5 h-5 mr-2 text-blue-600" />
+        Sentiment Distribution
+      </h3>
+      <div className="space-y-2">
+        <SentimentCard label="Positive" count={data.sentiment.positive} color="success" total={total} />
+        <SentimentCard label="Neutral" count={data.sentiment.neutral} color="warning" total={total} />
+        <SentimentCard label="Negative" count={data.sentiment.negative} color="failure" total={total} />
+      </div>
+    </Card>
+  );
+};
 
 const chartColors = [
   { line: 'rgb(37, 99, 235)', fill: 'rgba(37, 99, 235, 0.1)' },   // Blue
@@ -74,6 +95,9 @@ const TrendAnalysis = ({ data }: { data: AnalysisResult }) => {
   
   // If we don't have trends data, don't render anything
   if (!hasTrendsData) return null;
+  
+  // Added state for collapsible chart
+  const [isExpanded, setIsExpanded] = useState(true);
   
   const chartData: ChartData<'line'> = {
     labels: data.trends!.map(trend => new Date(trend.date).toLocaleDateString()),
@@ -198,19 +222,55 @@ const TrendAnalysis = ({ data }: { data: AnalysisResult }) => {
   };
 
   return (
-    <Card className="mt-6">
+    <Card className="mt-6 hover:shadow-md transition-shadow">
       <div>
-        <h3 className="text-lg font-medium mb-1 text-gray-800 dark:text-white">
-          Trend Analysis
-        </h3>
+        <div 
+          className="flex justify-between items-center cursor-pointer mb-1"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          <h3 className="text-lg font-medium text-gray-800 dark:text-white">
+            Trend Analysis
+          </h3>
+          {isExpanded ? 
+            <ChevronUpIcon className="w-5 h-5 text-gray-500" /> : 
+            <ChevronDownIcon className="w-5 h-5 text-gray-500" />
+          }
+        </div>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
           Review volume trends over time
         </p>
 
-        <div className="h-[400px]">
-          <Line data={chartData} options={options} />
-        </div>
+        {isExpanded && (
+          <div className="h-[300px] md:h-[400px]">
+            <Line data={chartData} options={options} />
+          </div>
+        )}
       </div>
+    </Card>
+  );
+};
+
+// Collapsible card component for future content sections
+const CollapsibleCard = ({ title, icon, children }: { title: string; icon?: React.ReactNode; children: React.ReactNode }) => {
+  const [isExpanded, setIsExpanded] = useState(true);
+  
+  return (
+    <Card className="shadow-sm hover:shadow-md transition-shadow">
+      <div 
+        className="flex justify-between items-center cursor-pointer mb-4"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <h3 className="text-lg font-semibold flex items-center">
+          {icon}
+          {title}
+        </h3>
+        {isExpanded ? 
+          <ChevronUpIcon className="w-5 h-5 text-gray-500" /> : 
+          <ChevronDownIcon className="w-5 h-5 text-gray-500" />
+        }
+      </div>
+      
+      {isExpanded && children}
     </Card>
   );
 };
@@ -222,9 +282,9 @@ export function AnalysisOverview({ result, comparisonResults }: EnhancedAnalysis
   const isComparisonMode = !!comparisonResults?.length;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
       {/* Left Column - Sentiment Analysis */}
-      <div className="lg:col-span-2 space-y-6">
+      <div className="lg:col-span-8 space-y-6">
         {/* Summary Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <SummaryCard title="Feature Requests" count={result.intentions.feature_request.length} color="blue" />
@@ -238,23 +298,22 @@ export function AnalysisOverview({ result, comparisonResults }: EnhancedAnalysis
 
         {/* Comparison Apps Sentiment Analysis */}
         {comparisonResults?.map((compResult, index) => (
-          <Card key={index} className="shadow-sm">
-            <h3 className="text-lg font-semibold flex items-center mb-4">
-              <ChartPieIcon className="w-5 h-5 mr-2 text-blue-600" />
-              Comparison App {index + 1} Sentiment Analysis
-            </h3>
+          <CollapsibleCard
+            key={index}
+            title={`Comparison App ${index + 1} Sentiment Analysis`}
+            icon={<ChartPieIcon className="w-5 h-5 mr-2 text-blue-600" />}
+          >
             <SentimentDistribution data={compResult} />
-          </Card>
+          </CollapsibleCard>
         ))}
       </div>
 
       {/* Right Column - Keywords and Trend Analysis */}
-      <div className="space-y-6">
-        <Card className="shadow-sm">
-          <h3 className="text-lg font-semibold flex items-center mb-4">
-            <ChatBubbleLeftIcon className="w-5 h-5 mr-2 text-blue-600" />
-            Top Keywords
-          </h3>
+      <div className="lg:col-span-4 space-y-6">
+        <CollapsibleCard
+          title="Top Keywords"
+          icon={<ChatBubbleLeftIcon className="w-5 h-5 mr-2 text-blue-600" />}
+        >
           <div className="flex flex-wrap gap-2">
             {result.keywords.map(({ word, count }) => (
               <Badge key={word} color="info" className="text-sm py-1.5">
@@ -262,7 +321,7 @@ export function AnalysisOverview({ result, comparisonResults }: EnhancedAnalysis
               </Badge>
             ))}
           </div>
-        </Card>
+        </CollapsibleCard>
 
         {/* Only render Trend Analysis if data is available */}
         {result.trends && result.trends.length > 0 && (
