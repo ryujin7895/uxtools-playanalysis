@@ -208,7 +208,7 @@ export function AnalysisComments({ result }: AnalysisResultsProps) {
           
           {ratingFilter !== null && (
             <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-              Rating: {ratingFilter}★
+              Rating: {ratingFilter}
               <button onClick={clearRatingFilter} className="ml-1 text-blue-600 hover:text-blue-800">
                 <XMarkIcon className="w-3 h-3" />
               </button>
@@ -273,7 +273,7 @@ export function AnalysisComments({ result }: AnalysisResultsProps) {
 
           {/* Rating filter with counts */}
           <Dropdown 
-            label={ratingFilter !== null ? `${ratingFilter}★ Ratings` : "All Ratings"} 
+            label={ratingFilter !== null ? `Rating: ${ratingFilter}` : "All Ratings"} 
             inline
             className="w-full sm:w-auto"
           >
@@ -292,7 +292,7 @@ export function AnalysisComments({ result }: AnalysisResultsProps) {
                 onClick={() => { setRatingFilter(star); setCurrentPage(1); }}
                 className="flex justify-between items-center w-full"
               >
-                <span>{star}★</span>
+                <span>{star}</span>
                 <span className="text-xs text-gray-500">
                   ({ratingCounts[star]})
                 </span>
@@ -347,24 +347,37 @@ export function AnalysisComments({ result }: AnalysisResultsProps) {
                 <div className="flex items-center justify-between border-b pb-3">
                   <div className="flex items-center gap-2">
                     <div className="flex flex-col">
+                      {/* OPTION 1: Enhanced sentiment chips with icons */}
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium text-gray-900">
                           {comment.userName || "Anonymous User"}
                         </span>
-                        {/* Sentiment indicator */}
-                        <span className={`inline-block w-2 h-2 rounded-full ${
-                          comment.sentiment === "positive" ? "bg-green-500" : 
-                          comment.sentiment === "negative" ? "bg-red-500" : "bg-purple-500"
-                        }`}></span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
-                        <span>{new Date(comment.date).toLocaleDateString()}</span>
-                        {comment.version && (
-                          <>
-                            <span>•</span>
-                            <span>v{comment.version}</span>
-                          </>
-                        )}
+                        <span 
+                          className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
+                            comment.sentiment === "positive" 
+                              ? "bg-green-100 text-green-800" 
+                              : comment.sentiment === "negative"
+                                ? "bg-red-100 text-red-800"
+                                : "bg-purple-100 text-purple-800"
+                          }`}
+                        >
+                          {comment.sentiment === "positive" && (
+                            <svg className="w-3 h-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                          {comment.sentiment === "negative" && (
+                            <svg className="w-3 h-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                          {comment.sentiment === "neutral" && (
+                            <svg className="w-3 h-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                          {getSentimentDisplayName(comment.sentiment)}
+                        </span>
                       </div>
                     </div>
                   </div>
