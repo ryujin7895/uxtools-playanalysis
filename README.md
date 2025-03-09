@@ -1,40 +1,95 @@
-# Welcome to Remix!
+# Play Store Analysis System
 
-- 📖 [Remix docs](https://remix.run/docs)
+A comprehensive system for analyzing Google Play Store reviews with advanced NLP techniques, feature request detection, bug classification, and trend analysis.
 
-## Development
+## Features
 
-Run the dev server:
+- **Efficient Data Fetching**: Retrieve up to 5000+ reviews with pagination and retry logic
+- **Advanced Sentiment Analysis**: NLP-based sentiment analysis using the natural library
+- **Feature Request Detection**: Identify and cluster feature requests using pattern recognition
+- **Bug Classification**: Detect and categorize bugs with severity assessment
+- **Competitor Analysis**: Identify competitor mentions and analyze sentiment
+- **Trend Detection**: Track sentiment, feature requests, and bugs over time
+- **Performance Optimization**: Caching system for improved performance
+- **Comprehensive API**: Unified API with job management and progress tracking
 
-```shellscript
-npm run dev
+## Architecture
+
+The system consists of several modules:
+
+1. **PlayStoreService** - Core data fetching from Google Play Store
+2. **ReviewAnalysisService** - Advanced NLP-based analysis
+3. **ClassificationService** - Feature and bug classification
+4. **AggregationService** - Data aggregation and trend detection
+5. **PlayStoreAnalysisSystem** - Unified API with caching and job management
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 14+
+- npm or yarn
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
 ```
 
-## Deployment
+### Usage
 
-First, build your app for production:
+```typescript
+import { playStoreAnalysis } from '~/services/server';
 
-```sh
-npm run build
+// Analyze an app
+const job = await playStoreAnalysis.analyzeApp('com.example.app');
+
+// Get job status
+const status = playStoreAnalysis.getJobStatus(job.id);
+
+// When job is completed, access the results
+if (status.status === 'completed') {
+  const results = status.result;
+  // Use results...
+}
 ```
 
-Then run the app in production mode:
+See the [Migration Guide](MIGRATION_GUIDE.md) for more detailed usage examples.
 
-```sh
-npm start
-```
+## API Reference
 
-Now you'll need to pick a host to deploy it to.
+### PlayStoreAnalysisSystem
 
-### DIY
+- `analyzeApp(appIdOrUrl, options)` - Start an analysis job
+- `getJobStatus(jobId)` - Get the status of a job
+- `cancelJob(jobId)` - Cancel a job
+- `fetchAppMetadata(appIdOrUrl)` - Fetch app metadata
+- `fetchReviews(options)` - Fetch app reviews
+- `clearCache(type)` - Clear the cache
+- `getCacheStats()` - Get cache statistics
 
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
+### PlayStoreService
 
-Make sure to deploy the output of `npm run build`
+- `fetchReviews(options)` - Fetch reviews from Google Play Store
+- `fetchAppMetadata(appIdOrUrl)` - Fetch app metadata from Google Play Store
 
-- `build/server`
-- `build/client`
+### ReviewAnalysisService
 
-## Styling
+- `analyzeReviews(reviews, options)` - Analyze reviews with NLP techniques
+- `analyzeReview(review, allReviewTexts, options)` - Analyze a single review
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+### ClassificationService
+
+- `classifyReviews(comments, appVersions, options)` - Classify reviews into features and bugs
+- `classifyFeatureRequests(comments, options)` - Classify feature requests
+- `classifyBugReports(comments, appVersions, options)` - Classify bug reports
+- `analyzeCompetitors(comments)` - Analyze competitor mentions
+
+### AggregationService
+
+- `aggregateResults(comments, analysis, classification, options)` - Aggregate analysis results
+
+## License
+
+MIT

@@ -77,6 +77,12 @@ export function SingleAppAnalysis({
           )}
         </Button>
 
+        {isAnalyzing && (
+          <p className="mt-2 text-xs text-gray-600 dark:text-gray-400">
+            Fetching reviews in multiple languages to provide comprehensive analysis. This may take a minute...
+          </p>
+        )}
+
         {actionData?.error && !appInput.error && (
           <p className="mt-2 text-sm text-red-600 dark:text-red-500">
             {actionData.error}

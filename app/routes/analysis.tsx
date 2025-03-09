@@ -2,34 +2,39 @@ import { useState } from "react";
 import { SingleAppAnalysis } from "~/components/analysis/SingleAppAnalysis";
 import { AnalysisResults } from "~/components/analysis/AnalysisResults";
 import type { AnalysisResult } from "~/types/analysis";
+import { useNavigation } from "@remix-run/react";
 
 export default function Analysis() {
   const [appInput, setAppInput] = useState({ id: 1, value: "", error: "" });
-  const [dateRange, setDateRange] = useState("");
+  const [dateRange, setDateRange] = useState("30days");
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
+  const navigation = useNavigation();
+  const isAnalyzing = navigation.state === "submitting";
 
   const handleInputChange = (value: string) => {
+    // Simple validation
     let error = "";
-    if (!value) {
+    if (!value.trim()) {
       error = "App ID or URL is required";
-    } else if (!value.includes("com.") && !value.includes("play.google.com")) {
-      error = "Invalid App ID or Play Store URL";
+    } else if (!/^[a-zA-Z0-9._]+$/.test(value) && 
+               !/https:\/\/play\.google\.com\/store\/apps\/details\?id=([a-zA-Z0-9._]+)/.test(value)) {
+      error = "Enter a valid App ID or Play Store URL";
     }
+    
     setAppInput({ ...appInput, value, error });
   };
 
   const handleAddApp = () => {
-    // This will be implemented later for comparison mode
+    // This would normally add another app for comparison
   };
 
   const handleReset = () => {
-    setAppInput({ id: 1, value: "", error: "" });
-    setDateRange("");
     setAnalysisResult(null);
+    setAppInput({ id: 1, value: "", error: "" });
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <div className="container mx-auto p-4">
       {!analysisResult ? (
         <SingleAppAnalysis
           appInput={appInput}
@@ -37,7 +42,7 @@ export default function Analysis() {
           dateRange={dateRange}
           onDateRangeChange={setDateRange}
           onAddApp={handleAddApp}
-          onAnalysisComplete={setAnalysisResult}
+          isAnalyzing={isAnalyzing}
         />
       ) : (
         <AnalysisResults

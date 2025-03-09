@@ -70,14 +70,21 @@ export function AnalysisComments({ result }: AnalysisResultsProps) {
     return counts;
   }, [result.comments]);
   
-  // Get rating counts for filter context
+  // Calculate rating distribution
   const ratingCounts = useMemo(() => {
-    const counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
+    // Define with explicit type to avoid conversion issues
+    const counts: Record<string, number> = {
+      '1': 0,
+      '2': 0,
+      '3': 0,
+      '4': 0,
+      '5': 0
+    };
     
     result.comments.forEach(comment => {
       const roundedScore = Math.round(comment.score);
       if (roundedScore >= 1 && roundedScore <= 5) {
-        counts[roundedScore]++;
+        counts[roundedScore.toString()]++;
       }
     });
     
@@ -294,7 +301,7 @@ export function AnalysisComments({ result }: AnalysisResultsProps) {
               >
                 <span>{star}</span>
                 <span className="text-xs text-gray-500">
-                  ({ratingCounts[star]})
+                  ({ratingCounts[star.toString()]})
                 </span>
               </Dropdown.Item>
             ))}

@@ -1,36 +1,62 @@
-import type { AnalysisResult, Comment } from '~/types/analysis';
-import { generateTrendData } from '~/utils/trendAnalysis';
+/**
+ * PlayStore Review Analysis System
+ * A modern, efficient system for fetching and analyzing Google Play Store reviews
+ */
 
 // @ts-ignore
-const gplayModule = require('google-play-scraper');
-const gplay = gplayModule.default;
+import gplay from 'google-play-scraper';
 
-// Simple sentiment word lists
-const POSITIVE_WORDS = new Set([
-  'good', 'great', 'awesome', 'excellent', 'amazing', 'love', 'perfect', 'best',
-  'helpful', 'fantastic', 'wonderful', 'superb', 'brilliant', 'outstanding'
-]);
+/**
+ * Core data structures for the Play Store review analysis system
+ */
 
-const NEGATIVE_WORDS = new Set([
-  'bad', 'poor', 'terrible', 'awful', 'horrible', 'worst', 'waste', 'useless',
-  'disappointed', 'frustrating', 'annoying', 'slow', 'crash', 'bug'
-]);
-
-interface PlayStoreReview {
+/**
+ * Raw review data from Google Play Store
+ */
+export interface PlayStoreReview {
   id: string;
   userName: string;
-  text: string;
-  score: number;
-  thumbsUp: number;
+  userImage?: string;
   date: string;
+  score: number;
+  scoreText?: string;
+  text: string;
+  thumbsUp: number;
+  url?: string;
+  replyDate?: string;
+  replyText?: string;
+  version?: string;
+  criterias?: Array<{
+    criteria: string;
+    rating: number;
+  }>;
 }
 
-interface ReviewBatch {
+/**
+ * Batch of reviews with pagination token
+ */
+export interface ReviewBatch {
   data: PlayStoreReview[];
   nextPaginationToken?: string;
 }
 
-interface AppMetadata {
+/**
+ * Date range options for filtering reviews
+ */
+export type DateRangeOption = '7days' | '30days' | '90days' | '1year' | 'all' | 'custom';
+
+/**
+ * Date range with start and end dates
+ */
+export interface DateRange {
+  startDate: Date;
+  endDate: Date;
+}
+
+/**
+ * App metadata from Google Play Store
+ */
+export interface AppMetadata {
   title: string;
   description: string;
   summary: string;
@@ -51,8 +77,6 @@ interface AppMetadata {
   version: string;
   genre: string;
   genreId: string;
-  familyGenre: string;
-  familyGenreId: string;
   categories: string[];
   histogram: { [key: string]: number }; // Rating distribution (1-5)
   priceText: string;
@@ -63,53 +87,60 @@ interface AppMetadata {
   similarApps: string[];
 }
 
-interface EnhancedAnalysisResult extends AnalysisResult {
-  featureRequests: FeatureRequestAnalysis[];
-  bugReports: BugReportAnalysis[];
-  userSegments: UserSegmentAnalysis;
-  competitiveMentions: CompetitiveMention[];
-  trends: any; // Add trends to the result
+/**
+ * Options for fetching reviews
+ */
+export interface FetchReviewsOptions {
+  appIdOrUrl: string;
+  dateRange?: DateRangeOption;
+  customDateRange?: DateRange;
+  maxReviews?: number;
+  batchSize?: number;
+  delayBetweenBatches?: number;
+  retryAttempts?: number;
+  retryDelay?: number;
+  signal?: AbortSignal;
 }
 
-interface FeatureRequestAnalysis {
-  feature: string;
-  count: number;
-  examples: string[];
-  averageRating: number;
-}
-
-interface BugReportAnalysis {
-  issue: string;
-  count: number;
-  examples: string[];
-  severity: 'low' | 'medium' | 'high';
-}
-
-interface UserSegmentAnalysis {
-  newUsers: Comment[];
-  powerUsers: Comment[];
-  returningUsers: Comment[];
-}
-
-interface CompetitiveMention {
-  competitor: string;
-  mentions: Comment[];
-  sentiment: {
-    positive: number;
-    negative: number;
-    neutral: number;
-  };
-}
-
+/**
+ * PlayStore Service for fetching and analyzing reviews
+ */
 export class PlayStoreService {
-  private static extractAppId(input: string): string {
+  /**
+   * Default options for fetching reviews
+   */
+  private static readonly DEFAULT_OPTIONS: Partial<FetchReviewsOptions> = {
+    dateRange: '30days',
+    maxReviews: 5000,
+    batchSize: 150,
+    delayBetweenBatches: 500,
+    retryAttempts: 3,
+    retryDelay: 1000,
+  };
+
+  /**
+   * Extract app ID from URL or return the ID directly
+   * @param input App ID or URL
+   * @returns Extracted app ID
+   */
+  public static extractAppId(input: string): string {
     if (input.includes('id=')) {
-      return input.split('id=')[1]?.split('&')[0] || '';
+      const match = input.match(/id=([^&]+)/);
+      return match ? match[1] : '';
     }
     return input;
   }
 
-  private static parseDateRange(dateRange: string): { startDate: Date; endDate: Date } {
+  /**
+   * Parse date range string into start and end dates
+   * @param dateRange Date range option
+   * @param customDateRange Optional custom date range
+   * @returns Date range with start and end dates
+   */
+  public static parseDateRange(
+    dateRange: DateRangeOption,
+    customDateRange?: DateRange
+  ): DateRange {
     const endDate = new Date();
     let startDate = new Date();
 
@@ -130,443 +161,253 @@ export class PlayStoreService {
         startDate = new Date(0); // Beginning of time
         break;
       case 'custom':
-        // Handle custom date range - for now defaulting to 30 days
+        if (customDateRange) {
+          return customDateRange;
+        }
+        // Default to 30 days if custom range not provided
         startDate.setDate(endDate.getDate() - 30);
         break;
-      default:
-        // Default to 30 days if invalid value
-        startDate.setDate(endDate.getDate() - 30);
     }
 
     return { startDate, endDate };
   }
 
-  private static isCommentInDateRange(commentDate: Date, startDate: Date, endDate: Date): boolean {
-    return commentDate >= startDate && commentDate <= endDate;
+  /**
+   * Check if a comment date is within the specified date range
+   * @param commentDate Comment date
+   * @param dateRange Date range to check against
+   * @returns True if comment is within date range
+   */
+  public static isCommentInDateRange(
+    commentDate: Date,
+    dateRange: DateRange
+  ): boolean {
+    return commentDate >= dateRange.startDate && commentDate <= dateRange.endDate;
   }
 
-  private static analyzeComment(text: string): { sentiment: Comment['sentiment']; keywords: string[] } {
-    const words = text.toLowerCase().split(/\W+/).filter(word => word.length > 3);
-    
-    let positiveCount = 0;
-    let negativeCount = 0;
-    
-    words.forEach(word => {
-      if (POSITIVE_WORDS.has(word)) positiveCount++;
-      if (NEGATIVE_WORDS.has(word)) negativeCount++;
-    });
-
-    let sentiment: Comment['sentiment'] = 'neutral';
-    if (positiveCount > negativeCount) sentiment = 'positive';
-    else if (negativeCount > positiveCount) sentiment = 'negative';
-
-    // Simple keyword extraction - just use words that appear
-    const keywords = Array.from(new Set(words));
-
-    return { sentiment, keywords };
+  /**
+   * Delay execution for specified milliseconds
+   * @param ms Milliseconds to delay
+   * @returns Promise that resolves after delay
+   */
+  private static async delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  private static analyzeCommentEnhanced(text: string, score: number): {
-    sentiment: Comment['sentiment']; 
-    keywords: string[];
-    featureRequests: string[];
-    bugReports: string[];
-    competitorMentions: string[];
-    userType: 'new' | 'power' | 'returning' | 'unknown';
-  } {
-    // Existing sentiment analysis
-    const { sentiment, keywords } = this.analyzeComment(text);
+  /**
+   * Fetch reviews with retry logic and rate limiting
+   * @param options Options for fetching reviews
+   * @returns Promise with array of reviews
+   */
+  public static async fetchReviews(
+    options: FetchReviewsOptions
+  ): Promise<PlayStoreReview[]> {
+    // Merge default options with provided options
+    const opts = { ...this.DEFAULT_OPTIONS, ...options };
     
-    // Feature request detection
-    const featureRequestPatterns = [
-      /wish(?:ed)? (?:it |there was |you |they |had |for )(.{3,50})/i,
-      /need(?:s)? (?:to |a |an |more )(.{3,50})/i,
-      /add(?:ing)? (.{3,50}) would/i,
-      /please (?:add|include) (.{3,50})/i
-    ];
-    
-    // Bug detection
-    const bugPatterns = [
-      /(?:crash|bug|error|issue|problem)(?:es|s)? (?:with|when|during) (.{3,50})/i,
-      /(?:doesn't|does not|won't|will not|can't|cannot) (.{3,50})/i,
-      /(?:broken|not working|fails|failed) (.{3,50})/i
-    ];
-    
-    // Popular competitors to detect
-    const competitors = ['facebook', 'instagram', 'tiktok', 'snapchat', 'twitter', 'whatsapp', 'messenger', 'signal', 'telegram'];
-    
-    // User type detection
-    const newUserPatterns = ['just downloaded', 'first time', 'new to this', 'recently started'];
-    const powerUserPatterns = ['long time user', 'been using for years', 'daily user', 'power user', 'premium user'];
-    const returningUserPatterns = ['came back', 'returned to', 'giving another try', 'reinstalled'];
-    
-    // Extract feature requests
-    const featureRequests: string[] = [];
-    featureRequestPatterns.forEach(pattern => {
-      const match = text.match(pattern);
-      if (match && match[1]) featureRequests.push(match[1].trim());
-    });
-    
-    // Extract bug reports
-    const bugReports: string[] = [];
-    bugPatterns.forEach(pattern => {
-      const match = text.match(pattern);
-      if (match && match[1]) bugReports.push(match[1].trim());
-    });
-    
-    // Detect competitor mentions
-    const competitorMentions = competitors.filter(competitor => 
-      text.toLowerCase().includes(competitor)
+    // Extract app ID from URL if needed
+    const appId = this.extractAppId(opts.appIdOrUrl);
+    if (!appId) {
+      throw new Error('Invalid app ID or URL');
+    }
+
+    // Parse date range
+    const dateRange = this.parseDateRange(
+      opts.dateRange || '30days',
+      opts.customDateRange
     );
+
+    // Languages to fetch reviews in - start with English and Indonesian as primary languages
+    const languages = ['en', 'id']; 
     
-    // Determine user type
-    let userType: 'new' | 'power' | 'returning' | 'unknown' = 'unknown';
-    if (newUserPatterns.some(pattern => text.toLowerCase().includes(pattern))) {
-      userType = 'new';
-    } else if (powerUserPatterns.some(pattern => text.toLowerCase().includes(pattern))) {
-      userType = 'power';
-    } else if (returningUserPatterns.some(pattern => text.toLowerCase().includes(pattern))) {
-      userType = 'returning';
-    }
-    
-    return {
-      sentiment,
-      keywords,
-      featureRequests,
-      bugReports,
-      competitorMentions,
-      userType
-    };
-  }
-
-  private static categorizeIntention(text: string, sentiment: Comment['sentiment']): string[] {
-    const intentions: string[] = [];
-    const lowerText = text.toLowerCase();
-
-    const patterns = {
-      feature_request: ['add', 'would be nice', 'should have', 'need', 'missing', 'please add'],
-      bug_report: ['bug', 'crash', 'error', 'issue', 'problem', 'not working', 'fix'],
-      praise: ['great', 'awesome', 'love', 'excellent', 'perfect', 'amazing'],
-      complaint: ['bad', 'terrible', 'poor', 'waste', 'disappointed', 'awful']
-    };
-
-    Object.entries(patterns).forEach(([category, keywords]) => {
-      if (keywords.some(keyword => lowerText.includes(keyword))) {
-        intentions.push(category);
-      }
-    });
-
-    // If no specific intention is detected, categorize based on sentiment
-    if (intentions.length === 0) {
-      if (sentiment === 'positive') intentions.push('praise');
-      else if (sentiment === 'negative') intentions.push('complaint');
-    }
-
-    return intentions;
-  }
-
-  static async fetchComments(appIdOrUrl: string, dateRange: string): Promise<EnhancedAnalysisResult> {
-    const appId = this.extractAppId(appIdOrUrl);
-    const { startDate, endDate } = this.parseDateRange(dateRange);
-    
+    // Initialize variables for pagination
     let allReviews: PlayStoreReview[] = [];
-    let nextPaginationToken: string | undefined;
-    const maxReviews = 5000;
     let reachedEnd = false;
+    let totalBatchNumber = 0;
+    
+    // Set to track review IDs to avoid duplicates across languages
+    const reviewIds = new Set<string>();
 
-    try {
-      console.log('==================== DEBUG LOGS ====================');
-      console.log('gplayModule:', gplayModule);
-      console.log('gplayModule type:', typeof gplayModule);
-      console.log('gplayModule keys:', Object.keys(gplayModule));
-      console.log('gplay (default):', gplay);
-      console.log('gplay type:', typeof gplay);
-      console.log('gplay keys:', gplay ? Object.keys(gplay) : 'null');
-      console.log('=================================================');
+    console.log(`Starting to fetch reviews for app ID: ${appId} (limit: ${opts.maxReviews})`);
+    
+    // Fetch reviews for each language
+    for (const lang of languages) {
+      if (opts.maxReviews && allReviews.length >= opts.maxReviews) {
+        console.log(`Reached maximum review limit of ${opts.maxReviews}`);
+        break;
+      }
       
+      console.log(`Fetching reviews in language: ${lang}`);
+      
+      let nextPaginationToken: string | undefined = undefined;
+      let batchNumber = 0;
+      let consecutiveEmptyBatches = 0;
+      const MAX_EMPTY_BATCHES = 3; // Stop after 3 consecutive empty batches
+      let languageReachedEnd = false;
+      
+      // Fetch reviews in batches with pagination for this language
       do {
-        const reviewBatch = await gplay.reviews({
+        batchNumber++;
+        totalBatchNumber++;
+        console.log(`Fetching batch #${batchNumber} for language ${lang}...`);
+
+        // Retry logic for handling transient errors
+        let retryCount = 0;
+        let reviewBatch: ReviewBatch | null = null;
+
+        while (retryCount <= (opts.retryAttempts || 0)) {
+          try {
+            // Check if operation was aborted
+            if (opts.signal?.aborted) {
+              throw new Error('Operation aborted');
+            }
+
+            // Fetch batch of reviews
+            reviewBatch = await gplay.reviews({
           appId,
-          sort: 2, // NEWEST
-          num: 150,
+              sort: gplay.sort.NEWEST,
+              num: opts.batchSize,
           paginate: true,
           nextPaginationToken,
-        }) as ReviewBatch;
+              lang,
+              throttle: 10, // Rate limiting to avoid 503 errors
+            });
 
-        if (!reviewBatch?.data?.length) {
+            // Break retry loop if successful
+            break;
+          } catch (error) {
+            retryCount++;
+            console.error(`Error in batch #${batchNumber} for language ${lang} (attempt ${retryCount}):`, error);
+
+            // If we've reached max retries, throw the error
+            if (retryCount > (opts.retryAttempts || 0)) {
+              throw error;
+            }
+
+            // Exponential backoff for retries
+            const backoffDelay = (opts.retryDelay || 1000) * Math.pow(2, retryCount - 1);
+            console.log(`Retrying in ${backoffDelay}ms...`);
+            await this.delay(backoffDelay);
+          }
+        }
+
+        // Check if we got valid results
+        if (!reviewBatch || !reviewBatch.data || reviewBatch.data.length === 0) {
+          console.log(`No more reviews available in this batch for language ${lang}`);
+          consecutiveEmptyBatches++;
+          
+          // If we've had too many consecutive empty batches, stop
+          if (consecutiveEmptyBatches >= MAX_EMPTY_BATCHES) {
+            console.log(`Received ${MAX_EMPTY_BATCHES} consecutive empty batches for language ${lang}. Stopping.`);
+            languageReachedEnd = true;
+            break;
+          }
+          
+          // Try the next batch if we still have a pagination token
+          if (reviewBatch && reviewBatch.nextPaginationToken) {
+            nextPaginationToken = reviewBatch.nextPaginationToken;
+            await this.delay(opts.delayBetweenBatches || 500);
+            continue;
+          } else {
+            languageReachedEnd = true;
+          break;
+          }
+        }
+
+        // Reset consecutive empty batches counter since we got reviews
+        consecutiveEmptyBatches = 0;
+
+        // Filter reviews by date and deduplicate
+        const filteredBatch = reviewBatch.data.filter(review => {
+          // Check if review is within date range
+          const reviewDate = new Date(review.date);
+          const inDateRange = this.isCommentInDateRange(reviewDate, dateRange);
+          
+          // Check if we've already seen this review ID (to avoid duplicates across languages)
+          const isDuplicate = reviewIds.has(review.id);
+          
+          // If it's a new review in the date range, add its ID to our set
+          if (inDateRange && !isDuplicate) {
+            reviewIds.add(review.id);
+            return true;
+          }
+          
+          return false;
+        });
+        
+        // Log how many duplicates we found
+        const duplicatesFound = reviewBatch.data.length - filteredBatch.length;
+        if (duplicatesFound > 0) {
+          console.log(`Found ${duplicatesFound} duplicate or out-of-range reviews in this batch`);
+        }
+
+        // Add filtered reviews to the collection
+        allReviews = allReviews.concat(filteredBatch);
+        nextPaginationToken = reviewBatch.nextPaginationToken;
+
+        // Log progress
+        const progress = Math.min((allReviews.length / (opts.maxReviews || 5000)) * 100, 100).toFixed(1);
+        console.log(`Batch #${batchNumber} for language ${lang}: Got ${filteredBatch.length} reviews. Total: ${allReviews.length} (${progress}%)`);
+        console.log('Has next page token:', !!nextPaginationToken);
+
+        // Stop if we've reached the maximum number of reviews
+        if (opts.maxReviews && allReviews.length >= opts.maxReviews) {
+          console.log(`Reached maximum review limit of ${opts.maxReviews}`);
           reachedEnd = true;
           break;
         }
 
-        const filteredReviews = reviewBatch.data.filter((review: PlayStoreReview) => {
-          const reviewDate = new Date(review.date);
-          return this.isCommentInDateRange(reviewDate, startDate, endDate);
-        });
-
-        allReviews = allReviews.concat(filteredReviews);
-        nextPaginationToken = reviewBatch.nextPaginationToken;
-
-        if (allReviews.length >= maxReviews || !nextPaginationToken) {
-          reachedEnd = true;
+        // Stop if we don't have a next page token
+        if (!nextPaginationToken) {
+          console.log(`No next page token available for language ${lang} - reached end of reviews`);
+          languageReachedEnd = true;
+          break;
+        }
+        
+        // Stop if we're getting empty batches (even if we have a next token)
+        if (filteredBatch.length === 0) {
+          consecutiveEmptyBatches++;
+          if (consecutiveEmptyBatches >= MAX_EMPTY_BATCHES) {
+            console.log(`Received ${MAX_EMPTY_BATCHES} consecutive empty batches for language ${lang}. Stopping despite having a next token.`);
+            languageReachedEnd = true;
+            break;
+          }
         }
 
-        await new Promise(resolve => setTimeout(resolve, 500));
-      } while (!reachedEnd);
-
-      // Process comments with sentiment and keyword analysis
-      const keywordCount: { [key: string]: number } = {};
-      const processedComments: Comment[] = [];
-      const intentions = {
-        feature_request: [] as Comment[],
-        bug_report: [] as Comment[],
-        praise: [] as Comment[],
-        complaint: [] as Comment[]
-      };
-      let sentimentCounts = { positive: 0, negative: 0, neutral: 0 };
-
-      // New data structures for enhanced analysis
-      const featureRequestMap: Map<string, {count: number, examples: string[], ratings: number[]}> = new Map();
-      const bugReportMap: Map<string, {count: number, examples: string[], ratings: number[]}> = new Map();
-      const competitorMentionsMap: Map<string, {mentions: Comment[], positive: number, negative: number, neutral: number}> = new Map();
-      const userSegments = {
-        newUsers: [] as Comment[],
-        powerUsers: [] as Comment[],
-        returningUsers: [] as Comment[]
-      };
-
-      for (const review of allReviews) {
-        // Use enhanced analysis
-        const enhancedAnalysis = this.analyzeCommentEnhanced(review.text, review.score);
-        
-        // Original sentiment & keyword processing
-        const { sentiment, keywords } = enhancedAnalysis;
-        
-        // Count sentiment
-        sentimentCounts[sentiment]++;
-
-        // Count keywords
-        keywords.forEach(word => {
-          keywordCount[word] = (keywordCount[word] || 0) + 1;
-        });
-
-        const comment: Comment = {
-          id: review.id,
-          userName: review.userName,
-          content: review.text,
-          score: review.score,
-          thumbsUp: review.thumbsUp,
-          date: new Date(review.date).toISOString(),
-          year: new Date(review.date).getFullYear(),
-          sentiment
-        };
-
-        processedComments.push(comment);
-
-        // Categorize intentions
-        const commentIntentions = this.categorizeIntention(review.text, sentiment);
-        commentIntentions.forEach(intention => {
-          if (intention in intentions) {
-            intentions[intention as keyof typeof intentions].push(comment);
-          }
-        });
-        
-        // Track user segments
-        if (enhancedAnalysis.userType === 'new') userSegments.newUsers.push(comment);
-        if (enhancedAnalysis.userType === 'power') userSegments.powerUsers.push(comment);
-        if (enhancedAnalysis.userType === 'returning') userSegments.returningUsers.push(comment);
-        
-        // Track feature requests
-        enhancedAnalysis.featureRequests.forEach(feature => {
-          if (!featureRequestMap.has(feature)) {
-            featureRequestMap.set(feature, {count: 0, examples: [], ratings: []});
-          }
-          const featureData = featureRequestMap.get(feature)!;
-          featureData.count++;
-          if (featureData.examples.length < 3) featureData.examples.push(review.text);
-          featureData.ratings.push(review.score);
-        });
-        
-        // Track bug reports
-        enhancedAnalysis.bugReports.forEach(bug => {
-          if (!bugReportMap.has(bug)) {
-            bugReportMap.set(bug, {count: 0, examples: [], ratings: []});
-          }
-          const bugData = bugReportMap.get(bug)!;
-          bugData.count++;
-          if (bugData.examples.length < 3) bugData.examples.push(review.text);
-          bugData.ratings.push(review.score);
-        });
-        
-        // Track competitor mentions
-        enhancedAnalysis.competitorMentions.forEach(competitor => {
-          if (!competitorMentionsMap.has(competitor)) {
-            competitorMentionsMap.set(competitor, {
-              mentions: [],
-              positive: 0,
-              negative: 0,
-              neutral: 0
-            });
-          }
-          
-          const mentionData = competitorMentionsMap.get(competitor)!;
-          mentionData.mentions.push(comment);
-          if (comment.sentiment === 'positive') mentionData.positive++;
-          else if (comment.sentiment === 'negative') mentionData.negative++;
-          else mentionData.neutral++;
-        });
-      }
-
-      // Sort keywords by frequency
-      const sortedKeywords = Object.entries(keywordCount)
-        .map(([word, count]) => ({ word, count }))
-        .sort((a, b) => b.count - a.count)
-        .slice(0, 10);
-        
-      // Process the collected data
-      const featureRequests = Array.from(featureRequestMap.entries())
-        .map(([feature, data]) => ({
-          feature,
-          count: data.count,
-          examples: data.examples,
-          averageRating: data.ratings.reduce((sum, r) => sum + r, 0) / data.ratings.length
-        }))
-        .sort((a, b) => b.count - a.count);
+        // Add a delay between requests to avoid rate limiting
+        await this.delay(opts.delayBetweenBatches || 500);
+      } while (!languageReachedEnd);
       
-      const bugReports = Array.from(bugReportMap.entries())
-        .map(([issue, data]) => ({
-          issue,
-          count: data.count,
-          examples: data.examples,
-          severity: data.count > 10 ? 'high' as const : data.count > 3 ? 'medium' as const : 'low' as const
-        }))
-        .sort((a, b) => b.count - a.count);
-        
-      const competitiveMentions = Array.from(competitorMentionsMap.entries())
-        .map(([competitor, data]) => ({
-          competitor,
-          mentions: data.mentions,
-          sentiment: {
-            positive: data.positive,
-            negative: data.negative,
-            neutral: data.neutral
-          }
-        }))
-        .sort((a, b) => b.mentions.length - a.mentions.length);
-
-      // Generate trend data using the utility function
-      const trends = generateTrendData(processedComments, 6);
-
-      return {
-        comments: processedComments,
-        sentiment: sentimentCounts,
-        keywords: sortedKeywords,
-        intentions,
-        featureRequests,
-        bugReports,
-        userSegments,
-        competitiveMentions,
-        trends // Add trend data to the result
-      };
-    } catch (error) {
-      console.error('Error fetching Play Store comments:', error);
-      throw error;
+      console.log(`Completed fetching reviews for language ${lang}. Total retrieved so far: ${allReviews.length}`);
+      
+      // Add a longer delay between languages to avoid rate limiting
+      await this.delay((opts.delayBetweenBatches || 500) * 2);
     }
+
+    console.log(`Completed fetching reviews in all languages. Total retrieved: ${allReviews.length}`);
+    
+    // We've already deduplicated during fetching, so no need to do it again
+    console.log(`Final review count: ${allReviews.length} unique reviews`);
+    
+    return allReviews;
   }
 
-  static async fetchAppMetadata(appIdOrUrl: string): Promise<AppMetadata> {
+  /**
+   * Fetch app metadata from Google Play Store
+   * @param appIdOrUrl App ID or URL
+   * @returns Promise with app metadata
+   */
+  public static async fetchAppMetadata(appIdOrUrl: string): Promise<AppMetadata> {
     const appId = this.extractAppId(appIdOrUrl);
+    if (!appId) {
+      throw new Error('Invalid app ID or URL');
+    }
+
     try {
-      return await gplay.app({ appId });
+      const metadata = await gplay.app({ appId });
+      return metadata as unknown as AppMetadata;
     } catch (error) {
       console.error('Error fetching app metadata:', error);
-      throw error;
-    }
-  }
-
-  static async fetchCompetitorData(appIdOrUrl: string): Promise<any[]> {
-    const appId = this.extractAppId(appIdOrUrl);
-    try {
-      // Get similar apps
-      const appData = await gplay.app({ appId });
-      const similarApps = appData.similarApps || [];
-      
-      // Fetch details for each similar app
-      const competitorData = await Promise.all(
-        similarApps.slice(0, 5).map(async (similarAppId: string) => {
-          try {
-            const data = await gplay.app({ appId: similarAppId });
-            return {
-              id: similarAppId,
-              title: data.title,
-              score: data.score,
-              ratings: data.ratings,
-              installs: data.installs,
-              minInstalls: data.minInstalls,
-              price: data.price,
-              free: data.free,
-              updated: data.updated,
-              version: data.version
-            };
-          } catch {
-            return null;
-          }
-        })
-      );
-      
-      return competitorData.filter(Boolean);
-    } catch (error) {
-      console.error('Error fetching competitor data:', error);
-      throw error;
-    }
-  }
-
-  static async analyzeVersionImpact(appIdOrUrl: string): Promise<any> {
-    const appId = this.extractAppId(appIdOrUrl);
-    try {
-      const reviews = await this.fetchComments(appIdOrUrl, '90days');
-      const appInfo = await this.fetchAppMetadata(appIdOrUrl);
-      
-      // Group reviews by approximate version
-      const reviewsByDate = reviews.comments.reduce((acc: any, review) => {
-        const reviewDate = new Date(review.date).toISOString().split('T')[0];
-        acc[reviewDate] = acc[reviewDate] || [];
-        acc[reviewDate].push(review);
-        return acc;
-      }, {});
-      
-      // Analyze sentiment changes over time
-      const sentimentByDate = Object.entries(reviewsByDate).map(([date, dailyReviews]) => {
-        const reviews = dailyReviews as Comment[];
-        const sentimentCounts = {
-          date,
-          positive: reviews.filter(r => r.sentiment === 'positive').length,
-          negative: reviews.filter(r => r.sentiment === 'negative').length, 
-          neutral: reviews.filter(r => r.sentiment === 'neutral').length,
-          total: reviews.length,
-          averageScore: reviews.reduce((sum, r) => sum + r.score, 0) / reviews.length
-        };
-        return sentimentCounts;
-      });
-      
-      // Ensure trends data format is consistent with our TrendAnalysis component
-      const trends = sentimentByDate
-        .sort((a, b) => a.date.localeCompare(b.date))
-        .map(item => ({
-          date: item.date,
-          positive: item.positive,
-          negative: item.negative,
-          neutral: item.neutral,
-          total: item.total
-        }));
-      
-      return {
-        currentVersion: appInfo.version,
-        recentChanges: appInfo.recentChanges,
-        sentimentTrend: sentimentByDate.sort((a, b) => a.date.localeCompare(b.date)),
-        trends // Add trends in the format expected by TrendAnalysis component
-      };
-    } catch (error) {
-      console.error('Error analyzing version impact:', error);
       throw error;
     }
   }

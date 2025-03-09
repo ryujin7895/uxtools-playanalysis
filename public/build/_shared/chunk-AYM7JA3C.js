@@ -12520,7 +12520,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/analysis/SingleAppAnalysis.tsx"
   );
-  import.meta.hot.lastModified = "1741279281156.0867";
+  import.meta.hot.lastModified = "1741513779364.9482";
 }
 function SingleAppAnalysis({
   appInput,
@@ -12593,9 +12593,14 @@ function SingleAppAnalysis({
         lineNumber: 58,
         columnNumber: 9
       }, this),
-      actionData?.error && !appInput.error && /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { className: "mt-2 text-sm text-red-600 dark:text-red-500", children: actionData.error }, void 0, false, {
+      isAnalyzing && /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { className: "mt-2 text-xs text-gray-600 dark:text-gray-400", children: "Fetching reviews in multiple languages to provide comprehensive analysis. This may take a minute..." }, void 0, false, {
         fileName: "app/components/analysis/SingleAppAnalysis.tsx",
         lineNumber: 65,
+        columnNumber: 25
+      }, this),
+      actionData?.error && !appInput.error && /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { className: "mt-2 text-sm text-red-600 dark:text-red-500", children: actionData.error }, void 0, false, {
+        fileName: "app/components/analysis/SingleAppAnalysis.tsx",
+        lineNumber: 69,
         columnNumber: 50
       }, this)
     ] }, void 0, true, {
@@ -25905,7 +25910,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/analysis/AnalysisComments.tsx"
   );
-  import.meta.hot.lastModified = "1741424499869.8699";
+  import.meta.hot.lastModified = "1741510429282.8552";
 }
 function AnalysisComments({
   result
@@ -25949,16 +25954,16 @@ function AnalysisComments({
   }, [result.comments]);
   const ratingCounts = (0, import_react70.useMemo)(() => {
     const counts = {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
     };
     result.comments.forEach((comment) => {
       const roundedScore = Math.round(comment.score);
       if (roundedScore >= 1 && roundedScore <= 5) {
-        counts[roundedScore]++;
+        counts[roundedScore.toString()]++;
       }
     });
     return counts;
@@ -26011,11 +26016,11 @@ function AnalysisComments({
     /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "relative", children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(MagnifyingGlassIcon_default, { className: "w-4 h-4 text-gray-500 dark:text-gray-400" }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 162,
+        lineNumber: 163,
         columnNumber: 11
       }, this) }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 161,
+        lineNumber: 162,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("input", { type: "search", className: `block w-full p-2.5 pl-10 text-sm text-gray-900 border ${searchFocused ? "border-blue-500 ring-2 ring-blue-100" : "border-gray-300"} rounded-lg bg-gray-50 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`, placeholder: "Search in comments...", value: searchQuery, onChange: (e) => {
@@ -26023,36 +26028,36 @@ function AnalysisComments({
         setCurrentPage(1);
       }, onFocus: () => setSearchFocused(true), onBlur: () => setSearchFocused(false) }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 164,
+        lineNumber: 165,
         columnNumber: 9
       }, this),
       searchQuery && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { className: "absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700", onClick: clearSearchQuery, "aria-label": "Clear search", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(XMarkIcon_default, { className: "w-4 h-4" }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 169,
+        lineNumber: 170,
         columnNumber: 13
       }, this) }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 168,
+        lineNumber: 169,
         columnNumber: 25
       }, this),
       searchFocused && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "absolute mt-1 w-full bg-white shadow-lg rounded-md border border-gray-200 dark:bg-gray-800 dark:border-gray-700 z-10", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "p-2 text-xs text-gray-500", children: "Search by comment content or username" }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 172,
+        lineNumber: 173,
         columnNumber: 13
       }, this) }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 171,
+        lineNumber: 172,
         columnNumber: 27
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisComments.tsx",
-      lineNumber: 160,
+      lineNumber: 161,
       columnNumber: 7
     }, this),
     isAnyFilterActive && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex flex-wrap gap-2 items-center", children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "text-sm text-gray-500", children: "Active filters:" }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 180,
+        lineNumber: 181,
         columnNumber: 11
       }, this),
       searchQuery && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800", children: [
@@ -26061,16 +26066,16 @@ function AnalysisComments({
         '"',
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { onClick: clearSearchQuery, className: "ml-1 text-blue-600 hover:text-blue-800", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(XMarkIcon_default, { className: "w-3 h-3" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 185,
+          lineNumber: 186,
           columnNumber: 17
         }, this) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 184,
+          lineNumber: 185,
           columnNumber: 15
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 182,
+        lineNumber: 183,
         columnNumber: 27
       }, this),
       sentimentFilter && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800", children: [
@@ -26078,16 +26083,16 @@ function AnalysisComments({
         getSentimentDisplayName(sentimentFilter),
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { onClick: clearSentimentFilter, className: "ml-1 text-blue-600 hover:text-blue-800", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(XMarkIcon_default, { className: "w-3 h-3" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 192,
+          lineNumber: 193,
           columnNumber: 17
         }, this) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 191,
+          lineNumber: 192,
           columnNumber: 15
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 189,
+        lineNumber: 190,
         columnNumber: 31
       }, this),
       ratingFilter !== null && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800", children: [
@@ -26095,44 +26100,44 @@ function AnalysisComments({
         ratingFilter,
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { onClick: clearRatingFilter, className: "ml-1 text-blue-600 hover:text-blue-800", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(XMarkIcon_default, { className: "w-3 h-3" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 199,
+          lineNumber: 200,
           columnNumber: 17
         }, this) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 198,
+          lineNumber: 199,
           columnNumber: 15
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 196,
+        lineNumber: 197,
         columnNumber: 37
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { onClick: clearAllFilters, className: "text-sm text-blue-600 hover:text-blue-800 hover:underline", children: "Clear all" }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 203,
+        lineNumber: 204,
         columnNumber: 11
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisComments.tsx",
-      lineNumber: 179,
+      lineNumber: 180,
       columnNumber: 29
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex flex-wrap gap-4", children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { className: "md:hidden inline-flex items-center text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg px-3 py-1.5", onClick: () => setFilterOpen(!filterOpen), children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(AdjustmentsHorizontalIcon_default, { className: "w-4 h-4 mr-1" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 212,
+          lineNumber: 213,
           columnNumber: 11
         }, this),
         "Filters",
         isAnyFilterActive && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "ml-1 bg-blue-100 text-blue-800 text-xs font-medium px-1.5 rounded-full", children: (!!searchQuery ? 1 : 0) + (sentimentFilter !== null ? 1 : 0) + (ratingFilter !== null ? 1 : 0) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 214,
+          lineNumber: 215,
           columnNumber: 33
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 211,
+        lineNumber: 212,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: `flex flex-wrap gap-4 w-full md:w-auto ${filterOpen ? "block" : "hidden md:flex"}`, children: [
@@ -26143,7 +26148,7 @@ function AnalysisComments({
           }, className: "flex justify-between items-center w-full", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { children: "All" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 227,
+              lineNumber: 228,
               columnNumber: 15
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "text-xs text-gray-500", children: [
@@ -26152,12 +26157,12 @@ function AnalysisComments({
               ")"
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 228,
+              lineNumber: 229,
               columnNumber: 15
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 223,
+            lineNumber: 224,
             columnNumber: 13
           }, this),
           ["positive", "negative", "neutral"].map((sentiment) => /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Dropdown.Item, { onClick: () => {
@@ -26166,7 +26171,7 @@ function AnalysisComments({
           }, className: "flex justify-between items-center w-full", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { children: getSentimentDisplayName(sentiment) }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 236,
+              lineNumber: 237,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "text-xs text-gray-500", children: [
@@ -26175,17 +26180,17 @@ function AnalysisComments({
               ")"
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 237,
+              lineNumber: 238,
               columnNumber: 17
             }, this)
           ] }, sentiment, true, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 232,
+            lineNumber: 233,
             columnNumber: 67
           }, this))
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 222,
+          lineNumber: 223,
           columnNumber: 11
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Dropdown, { label: ratingFilter !== null ? `Rating: ${ratingFilter}` : "All Ratings", inline: true, className: "w-full sm:w-auto", children: [
@@ -26195,7 +26200,7 @@ function AnalysisComments({
           }, className: "flex justify-between items-center w-full", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { children: "All" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 249,
+              lineNumber: 250,
               columnNumber: 15
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "text-xs text-gray-500", children: [
@@ -26204,12 +26209,12 @@ function AnalysisComments({
               ")"
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 250,
+              lineNumber: 251,
               columnNumber: 15
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 245,
+            lineNumber: 246,
             columnNumber: 13
           }, this),
           [5, 4, 3, 2, 1].map((star) => /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Dropdown.Item, { onClick: () => {
@@ -26218,219 +26223,219 @@ function AnalysisComments({
           }, className: "flex justify-between items-center w-full", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { children: star }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 258,
+              lineNumber: 259,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "text-xs text-gray-500", children: [
               "(",
-              ratingCounts[star],
+              ratingCounts[star.toString()],
               ")"
             ] }, void 0, true, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 259,
+              lineNumber: 260,
               columnNumber: 17
             }, this)
           ] }, star, true, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 254,
+            lineNumber: 255,
             columnNumber: 42
           }, this))
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 244,
+          lineNumber: 245,
           columnNumber: 11
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 220,
+        lineNumber: 221,
         columnNumber: 9
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisComments.tsx",
-      lineNumber: 209,
+      lineNumber: 210,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex justify-between items-center", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "text-sm text-gray-500 dark:text-gray-400", children: totalComments === 0 ? "No comments found" : isAnyFilterActive ? `Showing ${startIndex + 1} to ${endIndex} of ${totalComments} filtered comments (from ${result.comments.length} total)` : `Showing ${startIndex + 1} to ${endIndex} of ${totalComments} comments` }, void 0, false, {
       fileName: "app/components/analysis/AnalysisComments.tsx",
-      lineNumber: 269,
+      lineNumber: 270,
       columnNumber: 9
     }, this) }, void 0, false, {
       fileName: "app/components/analysis/AnalysisComments.tsx",
-      lineNumber: 268,
+      lineNumber: 269,
       columnNumber: 7
     }, this),
     totalComments === 0 ? /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "text-center p-8 border border-gray-200 dark:border-gray-700 rounded-lg", children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("svg", { className: "mx-auto h-12 w-12 text-gray-400", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 1, d: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 279,
+        lineNumber: 280,
         columnNumber: 13
       }, this) }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 278,
+        lineNumber: 279,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("h3", { className: "mt-2 text-sm font-medium text-gray-900", children: "No comments found" }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 281,
+        lineNumber: 282,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("p", { className: "mt-1 text-sm text-gray-500", children: isAnyFilterActive ? "Try adjusting your filters to find what you're looking for." : "There are no comments available for this selection." }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 282,
+        lineNumber: 283,
         columnNumber: 11
       }, this),
       isAnyFilterActive && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { onClick: clearAllFilters, className: "mt-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500", children: "Clear all filters" }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 285,
+        lineNumber: 286,
         columnNumber: 33
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisComments.tsx",
-      lineNumber: 277,
+      lineNumber: 278,
       columnNumber: 30
     }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "space-y-4", children: currentComments.map((comment) => /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Card, { className: "bg-white shadow-sm hover:shadow-md transition-shadow duration-200", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "space-y-4", children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center justify-between border-b pb-3", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex flex-col", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center gap-2", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "text-sm font-medium text-gray-900", children: comment.userName || "Anonymous User" }, void 0, false, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 297,
+            lineNumber: 298,
             columnNumber: 25
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: `inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${comment.sentiment === "positive" ? "bg-green-100 text-green-800" : comment.sentiment === "negative" ? "bg-red-100 text-red-800" : "bg-purple-100 text-purple-800"}`, children: [
             comment.sentiment === "positive" && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("svg", { className: "w-3 h-3 mr-1", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z", clipRule: "evenodd" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 302,
+              lineNumber: 303,
               columnNumber: 31
             }, this) }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 301,
+              lineNumber: 302,
               columnNumber: 64
             }, this),
             comment.sentiment === "negative" && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("svg", { className: "w-3 h-3 mr-1", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z", clipRule: "evenodd" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 305,
+              lineNumber: 306,
               columnNumber: 31
             }, this) }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 304,
+              lineNumber: 305,
               columnNumber: 64
             }, this),
             comment.sentiment === "neutral" && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("svg", { className: "w-3 h-3 mr-1", viewBox: "0 0 20 20", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z", clipRule: "evenodd" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 308,
+              lineNumber: 309,
               columnNumber: 31
             }, this) }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 307,
+              lineNumber: 308,
               columnNumber: 63
             }, this),
             getSentimentDisplayName(comment.sentiment)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 300,
+            lineNumber: 301,
             columnNumber: 25
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 296,
+          lineNumber: 297,
           columnNumber: 23
         }, this) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 294,
+          lineNumber: 295,
           columnNumber: 21
         }, this) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 293,
+          lineNumber: 294,
           columnNumber: 19
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center gap-3", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex", children: [
           [1, 2, 3, 4, 5].map((star) => /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("svg", { className: `w-5 h-5 ${star <= comment.score ? "text-yellow-300" : "text-gray-200 dark:text-gray-700"}`, fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("path", { d: "M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" }, void 0, false, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 319,
+            lineNumber: 320,
             columnNumber: 27
           }, this) }, star, false, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 318,
+            lineNumber: 319,
             columnNumber: 52
           }, this)),
           /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "ml-1 text-sm font-medium text-gray-700", children: comment.score.toFixed(1) }, void 0, false, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 321,
+            lineNumber: 322,
             columnNumber: 23
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 317,
+          lineNumber: 318,
           columnNumber: 21
         }, this) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 315,
+          lineNumber: 316,
           columnNumber: 19
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 292,
+        lineNumber: 293,
         columnNumber: 17
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "py-1", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("p", { className: "text-base text-gray-800", children: comment.content }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 330,
+        lineNumber: 331,
         columnNumber: 19
       }, this) }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 329,
+        lineNumber: 330,
         columnNumber: 17
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center justify-between pt-2 border-t", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex flex-wrap gap-2", children: comment.intentions?.map((intention) => /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "px-2 py-0.5 bg-blue-50 text-blue-700 text-xs font-medium rounded-full", children: intention.replace("_", " ") }, intention, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 339,
+          lineNumber: 340,
           columnNumber: 59
         }, this)) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 337,
+          lineNumber: 338,
           columnNumber: 19
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center text-gray-500", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { className: "flex items-center gap-1 text-xs hover:text-blue-600", "aria-label": "Mark as helpful", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("svg", { className: "w-4 h-4", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" }, void 0, false, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 348,
+            lineNumber: 349,
             columnNumber: 25
           }, this) }, void 0, false, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 347,
+            lineNumber: 348,
             columnNumber: 23
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { children: comment.thumbsUp }, void 0, false, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 350,
+            lineNumber: 351,
             columnNumber: 23
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 346,
+          lineNumber: 347,
           columnNumber: 21
         }, this) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 345,
+          lineNumber: 346,
           columnNumber: 19
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 336,
+        lineNumber: 337,
         columnNumber: 17
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisComments.tsx",
-      lineNumber: 291,
+      lineNumber: 292,
       columnNumber: 15
     }, this) }, comment.id, false, {
       fileName: "app/components/analysis/AnalysisComments.tsx",
-      lineNumber: 289,
+      lineNumber: 290,
       columnNumber: 43
     }, this)) }, void 0, false, {
       fileName: "app/components/analysis/AnalysisComments.tsx",
-      lineNumber: 288,
+      lineNumber: 289,
       columnNumber: 18
     }, this),
     totalPages > 1 && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex flex-col md:flex-row justify-between items-center mt-6 gap-2", children: [
@@ -26441,34 +26446,34 @@ function AnalysisComments({
         totalPages
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 360,
+        lineNumber: 361,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("nav", { className: "flex items-center space-x-1", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { onClick: () => setCurrentPage(Math.max(1, currentPage - 1)), disabled: currentPage === 1, className: `p-1 rounded-md ${currentPage === 1 ? "text-gray-400 cursor-not-allowed" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"}`, "aria-label": "Previous page", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(ChevronLeftIcon_default, { className: "w-5 h-5" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 366,
+          lineNumber: 367,
           columnNumber: 15
         }, this) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 365,
+          lineNumber: 366,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center space-x-1", children: [
           currentPage > 3 && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(import_jsx_dev_runtime8.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { onClick: () => setCurrentPage(1), className: "px-3 py-1 rounded-md text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700", children: "1" }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 372,
+              lineNumber: 373,
               columnNumber: 19
             }, this),
             currentPage > 4 && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "px-2 text-gray-500 dark:text-gray-400", children: "..." }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 375,
+              lineNumber: 376,
               columnNumber: 39
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 371,
+            lineNumber: 372,
             columnNumber: 35
           }, this),
           [...Array(totalPages)].map((_, i) => {
@@ -26476,7 +26481,7 @@ function AnalysisComments({
             if (pageNum === currentPage || pageNum === currentPage - 1 || pageNum === currentPage + 1 || pageNum === currentPage - 2 && currentPage > 3 || pageNum === currentPage + 2 && currentPage < totalPages - 2) {
               return /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { onClick: () => setCurrentPage(pageNum), className: `px-3 py-1 rounded-md text-sm font-medium ${currentPage === pageNum ? "bg-blue-600 text-white" : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"}`, children: pageNum }, pageNum, false, {
                 fileName: "app/components/analysis/AnalysisComments.tsx",
-                lineNumber: 384,
+                lineNumber: 385,
                 columnNumber: 22
               }, this);
             }
@@ -26485,36 +26490,36 @@ function AnalysisComments({
           currentPage < totalPages - 2 && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(import_jsx_dev_runtime8.Fragment, { children: [
             currentPage < totalPages - 3 && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "px-2 text-gray-500 dark:text-gray-400", children: "..." }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 393,
+              lineNumber: 394,
               columnNumber: 52
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { onClick: () => setCurrentPage(totalPages), className: "px-3 py-1 rounded-md text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700", children: totalPages }, void 0, false, {
               fileName: "app/components/analysis/AnalysisComments.tsx",
-              lineNumber: 394,
+              lineNumber: 395,
               columnNumber: 19
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/analysis/AnalysisComments.tsx",
-            lineNumber: 392,
+            lineNumber: 393,
             columnNumber: 48
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 369,
+          lineNumber: 370,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("button", { onClick: () => setCurrentPage(Math.min(totalPages, currentPage + 1)), disabled: currentPage === totalPages, className: `p-1 rounded-md ${currentPage === totalPages ? "text-gray-400 cursor-not-allowed" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"}`, "aria-label": "Next page", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(ChevronRightIcon_default, { className: "w-5 h-5" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 401,
+          lineNumber: 402,
           columnNumber: 15
         }, this) }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 400,
+          lineNumber: 401,
           columnNumber: 13
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 364,
+        lineNumber: 365,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center text-sm text-gray-500", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("select", { className: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white", value: commentsPerPage, onChange: (e) => {
@@ -26522,41 +26527,41 @@ function AnalysisComments({
       }, children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("option", { value: "5", children: "5 per page" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 411,
+          lineNumber: 412,
           columnNumber: 15
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("option", { value: "10", children: "10 per page" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 412,
+          lineNumber: 413,
           columnNumber: 15
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("option", { value: "25", children: "25 per page" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 413,
+          lineNumber: 414,
           columnNumber: 15
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("option", { value: "50", children: "50 per page" }, void 0, false, {
           fileName: "app/components/analysis/AnalysisComments.tsx",
-          lineNumber: 414,
+          lineNumber: 415,
           columnNumber: 15
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 406,
+        lineNumber: 407,
         columnNumber: 13
       }, this) }, void 0, false, {
         fileName: "app/components/analysis/AnalysisComments.tsx",
-        lineNumber: 405,
+        lineNumber: 406,
         columnNumber: 11
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/analysis/AnalysisComments.tsx",
-      lineNumber: 359,
+      lineNumber: 360,
       columnNumber: 26
     }, this)
   ] }, void 0, true, {
     fileName: "app/components/analysis/AnalysisComments.tsx",
-    lineNumber: 158,
+    lineNumber: 159,
     columnNumber: 10
   }, this);
 }
@@ -26587,7 +26592,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/analysis/AnalysisResults.tsx"
   );
-  import.meta.hot.lastModified = "1741418148639.462";
+  import.meta.hot.lastModified = "1741513780207.3477";
 }
 function AnalysisResults({
   onReset,
@@ -26597,28 +26602,101 @@ function AnalysisResults({
 }) {
   _s5();
   const [currentView, setCurrentView] = (0, import_react71.useState)("overview");
+  (0, import_react71.useEffect)(() => {
+    console.log("AnalysisResults received result:", result);
+    console.log("Result comments:", result?.comments);
+    console.log("Comments length:", result?.comments?.length);
+  }, [result]);
+  if (!result || !result.comments) {
+    return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "w-full", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(Card, { className: "shadow-sm", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "p-4 text-center", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("h3", { className: "text-lg font-medium text-gray-900 dark:text-white", children: "No analysis results available" }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisResults.tsx",
+        lineNumber: 50,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("p", { className: "mt-2 text-sm text-gray-500 dark:text-gray-400", children: "There was an issue processing the analysis. Please try again." }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisResults.tsx",
+        lineNumber: 51,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("button", { onClick: onReset, className: "mt-4 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500", children: "Try Again" }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisResults.tsx",
+        lineNumber: 54,
+        columnNumber: 13
+      }, this)
+    ] }, void 0, true, {
+      fileName: "app/components/analysis/AnalysisResults.tsx",
+      lineNumber: 49,
+      columnNumber: 11
+    }, this) }, void 0, false, {
+      fileName: "app/components/analysis/AnalysisResults.tsx",
+      lineNumber: 48,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "app/components/analysis/AnalysisResults.tsx",
+      lineNumber: 47,
+      columnNumber: 12
+    }, this);
+  }
+  if (result.comments.length === 0) {
+    return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "w-full", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(Card, { className: "shadow-sm", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "p-4 text-center", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("h3", { className: "text-lg font-medium text-gray-900 dark:text-white", children: "No reviews found" }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisResults.tsx",
+        lineNumber: 67,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("p", { className: "mt-2 text-sm text-gray-500 dark:text-gray-400", children: "We couldn't find any reviews for this app in the selected date range." }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisResults.tsx",
+        lineNumber: 68,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("p", { className: "mt-1 text-sm text-gray-500 dark:text-gray-400", children: "Try selecting a different date range or check if the app ID is correct." }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisResults.tsx",
+        lineNumber: 71,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("button", { onClick: onReset, className: "mt-4 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500", children: "Try Again" }, void 0, false, {
+        fileName: "app/components/analysis/AnalysisResults.tsx",
+        lineNumber: 74,
+        columnNumber: 13
+      }, this)
+    ] }, void 0, true, {
+      fileName: "app/components/analysis/AnalysisResults.tsx",
+      lineNumber: 66,
+      columnNumber: 11
+    }, this) }, void 0, false, {
+      fileName: "app/components/analysis/AnalysisResults.tsx",
+      lineNumber: 65,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "app/components/analysis/AnalysisResults.tsx",
+      lineNumber: 64,
+      columnNumber: 12
+    }, this);
+  }
   const enhancedResult = result;
   const enhancedComparisonResults = comparisonResults;
   const isComparisonMode = !!comparisonResults?.length;
-  const totalComments = result.comments.length + (comparisonResults?.reduce((sum, r) => sum + r.comments.length, 0) || 0);
+  const totalComments = result.comments.length + (comparisonResults?.reduce((sum, r) => sum + (r?.comments?.length || 0), 0) || 0);
+  console.log(`Rendering AnalysisResults with ${totalComments} total comments`);
   const renderContent = () => {
     switch (currentView) {
       case "overview":
         return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(AnalysisOverview, { result: enhancedResult, comparisonResults: enhancedComparisonResults, onReset, appCount }, void 0, false, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 48,
+          lineNumber: 93,
           columnNumber: 16
         }, this);
       case "comments":
         return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(AnalysisComments, { result, comparisonResults, onReset, appCount }, void 0, false, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 50,
+          lineNumber: 95,
           columnNumber: 16
         }, this);
       default:
         return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(AnalysisOverview, { result: enhancedResult, comparisonResults: enhancedComparisonResults, onReset, appCount }, void 0, false, {
           fileName: "app/components/analysis/AnalysisResults.tsx",
-          lineNumber: 52,
+          lineNumber: 97,
           columnNumber: 16
         }, this);
     }
@@ -26626,26 +26704,26 @@ function AnalysisResults({
   return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "w-full", children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(AnalysisHeader, { title: "Analysis Results", appCount, totalComments, isComparisonMode, onReset }, void 0, false, {
       fileName: "app/components/analysis/AnalysisResults.tsx",
-      lineNumber: 57,
+      lineNumber: 102,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(AnalysisNavigation, { currentView, setCurrentView }, void 0, false, {
       fileName: "app/components/analysis/AnalysisResults.tsx",
-      lineNumber: 60,
+      lineNumber: 105,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(Card, { className: "shadow-sm mt-4", children: renderContent() }, void 0, false, {
       fileName: "app/components/analysis/AnalysisResults.tsx",
-      lineNumber: 63,
+      lineNumber: 108,
       columnNumber: 7
     }, this)
   ] }, void 0, true, {
     fileName: "app/components/analysis/AnalysisResults.tsx",
-    lineNumber: 55,
+    lineNumber: 100,
     columnNumber: 10
   }, this);
 }
-_s5(AnalysisResults, "sr+sCgzYw0YbQDYqS8FaHarLCfY=");
+_s5(AnalysisResults, "d+Zw73P9WPItLUZkoZC+mvBzO+8=");
 _c9 = AnalysisResults;
 var _c9;
 $RefreshReg$(_c9, "AnalysisResults");
@@ -26705,4 +26783,4 @@ chart.js/dist/chart.js:
    * Released under the MIT License
    *)
 */
-//# sourceMappingURL=/build/_shared/chunk-WRDFRPG2.js.map
+//# sourceMappingURL=/build/_shared/chunk-AYM7JA3C.js.map

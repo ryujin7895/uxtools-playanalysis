@@ -1,9 +1,11 @@
 import {
   AnalysisResults,
   SingleAppAnalysis
-} from "/build/_shared/chunk-WRDFRPG2.js";
+} from "/build/_shared/chunk-AYM7JA3C.js";
 import "/build/_shared/chunk-LYT6NCUF.js";
-import "/build/_shared/chunk-YR5DUWXI.js";
+import {
+  useNavigation
+} from "/build/_shared/chunk-YR5DUWXI.js";
 import "/build/_shared/chunk-OPGM6WIO.js";
 import {
   require_jsx_dev_runtime
@@ -40,7 +42,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/routes/analysis.tsx"
   );
-  import.meta.hot.lastModified = "1741277892957.8";
+  import.meta.hot.lastModified = "1741510376927.2336";
 }
 function Analysis() {
   _s();
@@ -49,14 +51,16 @@ function Analysis() {
     value: "",
     error: ""
   });
-  const [dateRange, setDateRange] = (0, import_react.useState)("");
+  const [dateRange, setDateRange] = (0, import_react.useState)("30days");
   const [analysisResult, setAnalysisResult] = (0, import_react.useState)(null);
+  const navigation = useNavigation();
+  const isAnalyzing = navigation.state === "submitting";
   const handleInputChange = (value) => {
     let error = "";
-    if (!value) {
+    if (!value.trim()) {
       error = "App ID or URL is required";
-    } else if (!value.includes("com.") && !value.includes("play.google.com")) {
-      error = "Invalid App ID or Play Store URL";
+    } else if (!/^[a-zA-Z0-9._]+$/.test(value) && !/https:\/\/play\.google\.com\/store\/apps\/details\?id=([a-zA-Z0-9._]+)/.test(value)) {
+      error = "Enter a valid App ID or Play Store URL";
     }
     setAppInput({
       ...appInput,
@@ -67,29 +71,30 @@ function Analysis() {
   const handleAddApp = () => {
   };
   const handleReset = () => {
+    setAnalysisResult(null);
     setAppInput({
       id: 1,
       value: "",
       error: ""
     });
-    setDateRange("");
-    setAnalysisResult(null);
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: "container mx-auto px-4 py-8 space-y-8", children: !analysisResult ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(SingleAppAnalysis, { appInput, onInputChange: handleInputChange, dateRange, onDateRangeChange: setDateRange, onAddApp: handleAddApp, onAnalysisComplete: setAnalysisResult }, void 0, false, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: "container mx-auto p-4", children: !analysisResult ? /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(SingleAppAnalysis, { appInput, onInputChange: handleInputChange, dateRange, onDateRangeChange: setDateRange, onAddApp: handleAddApp, isAnalyzing }, void 0, false, {
     fileName: "app/routes/analysis.tsx",
-    lineNumber: 60,
+    lineNumber: 63,
     columnNumber: 26
   }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(AnalysisResults, { onReset: handleReset, appCount: 1, result: analysisResult }, void 0, false, {
     fileName: "app/routes/analysis.tsx",
-    lineNumber: 60,
-    columnNumber: 222
+    lineNumber: 63,
+    columnNumber: 209
   }, this) }, void 0, false, {
     fileName: "app/routes/analysis.tsx",
-    lineNumber: 59,
+    lineNumber: 62,
     columnNumber: 10
   }, this);
 }
-_s(Analysis, "NpGXRIeU3D/8x/cCxhYiXlgdefA=");
+_s(Analysis, "Vdo/jYqXnyclmB28zqivkocmFAU=", false, function() {
+  return [useNavigation];
+});
 _c = Analysis;
 var _c;
 $RefreshReg$(_c, "Analysis");
@@ -98,4 +103,4 @@ window.$RefreshSig$ = prevRefreshSig;
 export {
   Analysis as default
 };
-//# sourceMappingURL=/build/routes/analysis-OIGT3ERH.js.map
+//# sourceMappingURL=/build/routes/analysis-GKPHHMHM.js.map
