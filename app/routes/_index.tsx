@@ -1,6 +1,6 @@
 import type { MetaFunction, ActionFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useActionData, useNavigation } from "@remix-run/react";
+import { useActionData, useNavigation, useSubmit, Form } from "@remix-run/react";
 import { Button, Card, Navbar, Dropdown, TextInput, Label, Tooltip, Spinner } from "flowbite-react";
 import { useState, useRef, useEffect } from "react";
 import { SunIcon, MoonIcon, PlusIcon, MinusIcon, ChartBarIcon, ArrowPathIcon, XMarkIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
@@ -22,6 +22,13 @@ export const meta: MetaFunction = () => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
+  const action = formData.get("_action");
+
+  // Handle reset action
+  if (action === "reset") {
+    return json({ success: false });
+  }
+
   const appIds = formData.getAll("appIds[]");
   const dateRange = formData.get("dateRange") as string;
 
@@ -119,20 +126,131 @@ export const action: ActionFunction = async ({ request }) => {
             neutral: (result as any).summary?.sentimentDistribution?.neutral || 0
           },
           intentions: {
-            feature_request: [],
-            bug_report: [],
-            praise: [],
-            complaint: []
+            // Categorize comments based on their content and sentiment
+            feature_request: rawReviews
+              .filter(r => {
+                const content = (r.text || r.content || '').toLowerCase();
+                return content.includes('feature') || 
+                       content.includes('add') || 
+                       content.includes('would be nice') || 
+                       content.includes('should have') ||
+                       content.includes('need') ||
+                       content.includes('missing');
+              })
+              .map(r => ({
+                id: r.id || `review-fr-${Math.random().toString(36).substring(2, 11)}`,
+                content: r.text || r.content || 'No content available',
+                date: r.date || new Date().toISOString(),
+                score: r.score || 3,
+                sentiment: r.sentiment || 'neutral',
+                userName: r.userName || `User ${Math.floor(Math.random() * 1000)}`,
+                version: r.version || '1.0',
+                thumbsUp: r.thumbsUp || 0
+              })),
+            bug_report: rawReviews
+              .filter(r => {
+                const content = (r.text || r.content || '').toLowerCase();
+                return (r.sentiment === 'negative' || r.score <= 3) && 
+                       (content.includes('bug') || 
+                        content.includes('crash') || 
+                        content.includes('error') || 
+                        content.includes('issue') ||
+                        content.includes('problem') ||
+                        content.includes('not working') ||
+                        content.includes('broken'));
+              })
+              .map(r => ({
+                id: r.id || `review-br-${Math.random().toString(36).substring(2, 11)}`,
+                content: r.text || r.content || 'No content available',
+                date: r.date || new Date().toISOString(),
+                score: r.score || 2,
+                sentiment: r.sentiment || 'negative',
+                userName: r.userName || `User ${Math.floor(Math.random() * 1000)}`,
+                version: r.version || '1.0',
+                thumbsUp: r.thumbsUp || 0
+              })),
+            praise: rawReviews
+              .filter(r => r.sentiment === 'positive' || r.score >= 4)
+              .map(r => ({
+                id: r.id || `review-pr-${Math.random().toString(36).substring(2, 11)}`,
+                content: r.text || r.content || 'No content available',
+                date: r.date || new Date().toISOString(),
+                score: r.score || 5,
+                sentiment: r.sentiment || 'positive',
+                userName: r.userName || `User ${Math.floor(Math.random() * 1000)}`,
+                version: r.version || '1.0',
+                thumbsUp: r.thumbsUp || 0
+              })),
+            complaint: rawReviews
+              .filter(r => (r.sentiment === 'negative' || r.score <= 2) && 
+                          !(r.text || r.content || '').toLowerCase().includes('bug') &&
+                          !(r.text || r.content || '').toLowerCase().includes('crash'))
+              .map(r => ({
+                id: r.id || `review-co-${Math.random().toString(36).substring(2, 11)}`,
+                content: r.text || r.content || 'No content available',
+                date: r.date || new Date().toISOString(),
+                score: r.score || 1,
+                sentiment: r.sentiment || 'negative',
+                userName: r.userName || `User ${Math.floor(Math.random() * 1000)}`,
+                version: r.version || '1.0',
+                thumbsUp: r.thumbsUp || 0
+              }))
           },
           keywords: ((result as any).insights || [])
             .filter((insight: any) => insight.type === 'feature' || insight.type === 'bug')
             .map((insight: any) => ({
               word: insight.title,
               count: insight.data?.count || 1
-            }))
+            })),
+          // Generate trend data based on the raw reviews
+          trends: generateTrendData(rawReviews)
         };
       })
     );
+    
+    // Function to generate trend data from raw reviews
+    function generateTrendData(reviews: any[]) {
+      if (!reviews || reviews.length === 0) return [];
+      
+      // Sort reviews by date
+      const sortedReviews = [...reviews].sort((a, b) => 
+        new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+      
+      // Group reviews by date (weekly)
+      const dateGroups = new Map<string, any[]>();
+      
+      sortedReviews.forEach(review => {
+        const date = new Date(review.date);
+        // Get the start of the week (Sunday)
+        const weekStart = new Date(date);
+        weekStart.setDate(date.getDate() - date.getDay());
+        const weekKey = weekStart.toISOString().split('T')[0];
+        
+        if (!dateGroups.has(weekKey)) {
+          dateGroups.set(weekKey, []);
+        }
+        
+        dateGroups.get(weekKey)!.push(review);
+      });
+      
+      // Convert grouped data to trend points
+      return Array.from(dateGroups.entries()).map(([date, groupReviews]) => {
+        const positive = groupReviews.filter(r => r.sentiment === 'positive').length;
+        const negative = groupReviews.filter(r => r.sentiment === 'negative').length;
+        const neutral = groupReviews.filter(r => r.sentiment === 'neutral').length;
+        
+        return {
+          date,
+          positive,
+          negative,
+          neutral,
+          total: groupReviews.length,
+          feature_requests: groupReviews.filter(r => (r.intentions || []).includes('feature_request')).length,
+          bug_reports: groupReviews.filter(r => (r.intentions || []).includes('bug_report')).length
+        };
+      });
+    }
     
     console.log('Analysis completed successfully');
     console.log(`Results array length: ${results.length}`);
@@ -230,8 +348,16 @@ export default function Index() {
   };
 
   // Reset analysis
+  const submit = useSubmit();
   const resetAnalysis = () => {
+    // Reset the form inputs
     setAppInputs([{ id: 1, value: "", error: "" }]);
+    
+    // Submit a reset action to clear the analysis state
+    submit(
+      { _action: "reset" },
+      { method: "post", action: "/" }
+    );
   };
 
   // Handle date range change

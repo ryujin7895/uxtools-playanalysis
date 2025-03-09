@@ -2,6 +2,7 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@re
 import { ThemeProvider, initializeTheme } from "~/utils/themeProvider";
 import tailwindStyles from "./tailwind.css";
 import "~/styles/tabs.css";
+import { ActionFunction, json } from "@remix-run/node";
 
 // Add a non-blocking script to initialize theme immediately to avoid flash
 const themeInitScript = `
@@ -17,6 +18,11 @@ const themeInitScript = `
     }
   })();
 `;
+
+export const action: ActionFunction = async ({ request }) => {
+  // Allow POST requests to pass through to child routes
+  return null;
+};
 
 export function links() {
   return [{ rel: "stylesheet", href: tailwindStyles }];

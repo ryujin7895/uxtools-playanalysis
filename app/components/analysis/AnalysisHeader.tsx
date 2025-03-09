@@ -1,6 +1,7 @@
 import { Button, Badge, Tooltip } from "flowbite-react";
 import { ChartBarIcon, ArrowPathIcon, InformationCircleIcon } from '@heroicons/react/24/outline';
 import { ReactNode } from "react";
+import { Form } from "@remix-run/react";
 
 export interface AnalysisHeaderProps {
   title: string;
@@ -56,14 +57,17 @@ export function AnalysisHeader({
         </div>
         <div className="flex items-center gap-3">
           {actions}
-          <Button 
-            color="light" 
-            onClick={onReset} 
-            className="flex items-center shadow-sm hover:shadow transition-shadow focus:ring-2 focus:ring-blue-300"
-            aria-label="Start new analysis">
-            <ArrowPathIcon className="w-4 h-4 mr-2" />
-            New Analysis
-          </Button>
+          <Form method="post">
+            <input type="hidden" name="_action" value="reset" />
+            <Button 
+              type="submit"
+              color="light" 
+              className="flex items-center shadow-sm hover:shadow transition-shadow focus:ring-2 focus:ring-blue-300"
+              aria-label="Start new analysis">
+              <ArrowPathIcon className="w-4 h-4 mr-2" />
+              New Analysis
+            </Button>
+          </Form>
         </div>
       </div>
     </header>
