@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
-    "@remix-run/node": "^2.3.1",
-    "@remix-run/react": "^2.3.1",
+    "@remix-run/node": "^2.16.0",
+    "@remix-run/react": "^2.16.0",
     "@remix-run/serve": "^2.16.0",
     "@vercel/remix": "^2.15.3",
     "chart.js": "^4.4.1",
@@ -31,8 +31,7 @@
     "recharts": "^2.15.1"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.3.1",
-    "@types/chart.js": "^2.9.41",
+    "@remix-run/dev": "^2.16.0",
     "@types/natural": "^5.1.5",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
