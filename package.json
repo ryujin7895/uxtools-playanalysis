@@ -4,10 +4,10 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev",
+    "build": "remix vite:build",
+    "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "remix-serve build",
+    "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -18,8 +18,8 @@
     "chart.js": "^4.4.1",
     "date-fns": "^4.1.0",
     "flowbite": "^2.2.0",
-    "flowbite-react": "^0.7.0",
-    "flowbite-typography": "^1.0.3",
+    "flowbite-react": "^0.10.2",
+    "flowbite-typography": "^1.0.5",
     "framer-motion": "^10.16.4",
     "google-play-scraper": "^10.0.1",
     "isbot": "^4.1.0",
