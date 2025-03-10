@@ -19,7 +19,7 @@ import {
   ChartData,
   ChartOptions,
   Filler
-} from 'chart.js';
+} from 'chart.js/auto';
 import type { EnhancedAnalysisProps, AnalysisResult, EnhancedAnalysisResult } from "~/types/analysis";
 import { useState } from "react";
 // Import the new TrendAnalysisChart component
