@@ -1,6 +1,6 @@
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 import { ThemeProvider, initializeTheme } from "~/utils/themeProvider";
-import tailwindStyles from "./tailwind.css";
+import "./tailwind.css";
 import "~/styles/tabs.css";
 import { ActionFunction, json } from "@remix-run/node";
 
@@ -25,7 +25,7 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export function links() {
-  return [{ rel: "stylesheet", href: tailwindStyles }];
+  return [];
 }
 
 export default function App() {
