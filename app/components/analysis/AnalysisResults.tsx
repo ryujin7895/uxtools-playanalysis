@@ -6,7 +6,7 @@ import { AnalysisNavigation } from "~/components/analysis/AnalysisNavigation";
 import { AnalysisOverview } from "~/components/analysis/AnalysisOverview";
 import { AnalysisComments } from "~/components/analysis/AnalysisComments";
 
-export function AnalysisResults({ onReset, appCount, result, comparisonResults }: AnalysisResultsProps) {
+export function AnalysisResults({ onReset, appCount, result }: AnalysisResultsProps) {
   // State for view management
   const [currentView, setCurrentView] = useState<string>("overview");
   
@@ -66,10 +66,7 @@ export function AnalysisResults({ onReset, appCount, result, comparisonResults }
   
   // Cast to enhanced type to safely access enhanced properties
   const enhancedResult = result as EnhancedAnalysisResult;
-  const enhancedComparisonResults = comparisonResults as EnhancedAnalysisResult[] | undefined;
-  
-  const isComparisonMode = !!comparisonResults?.length;
-  const totalComments = result.comments.length + (comparisonResults?.reduce((sum, r) => sum + (r?.comments?.length || 0), 0) || 0);
+  const totalComments = result.comments.length;
   
   console.log(`Rendering AnalysisResults with ${totalComments} total comments`);
   
@@ -78,22 +75,19 @@ export function AnalysisResults({ onReset, appCount, result, comparisonResults }
     switch (currentView) {
       case "overview":
         return <AnalysisOverview 
-                result={enhancedResult} 
-                comparisonResults={enhancedComparisonResults} 
+                result={enhancedResult}
                 onReset={onReset} 
                 appCount={appCount} 
               />;
       case "comments":
         return <AnalysisComments 
-                result={result} 
-                comparisonResults={comparisonResults} 
+                result={result}
                 onReset={onReset} 
                 appCount={appCount} 
               />;
       default:
         return <AnalysisOverview 
-                result={enhancedResult} 
-                comparisonResults={enhancedComparisonResults} 
+                result={enhancedResult}
                 onReset={onReset} 
                 appCount={appCount} 
               />;
@@ -107,7 +101,6 @@ export function AnalysisResults({ onReset, appCount, result, comparisonResults }
         title="Analysis Results"
         appCount={appCount}
         totalComments={totalComments}
-        isComparisonMode={isComparisonMode}
         onReset={onReset}
       />
       

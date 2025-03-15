@@ -9,7 +9,6 @@ interface SingleAppAnalysisProps {
   onInputChange: (value: string) => void;
   dateRange: string;
   onDateRangeChange: (value: string) => void;
-  onAddApp: () => void;
   isAnalyzing: boolean;
 }
 
@@ -18,7 +17,6 @@ export function SingleAppAnalysis({
   onInputChange,
   dateRange,
   onDateRangeChange,
-  onAddApp,
   isAnalyzing
 }: SingleAppAnalysisProps) {
   const actionData = useActionData<{ success: boolean; error?: string }>();
@@ -43,16 +41,6 @@ export function SingleAppAnalysis({
             placeholder="e.g., com.example.app"
             showHelper={true}
           />
-          
-          <div className="flex items-center mt-[30px]">
-            <Button
-              type="button"
-              onClick={onAddApp}
-              className="!h-[42px] !w-[42px] !p-0 !text-gray-500 !bg-gray-50 !rounded-full hover:!text-gray-700 hover:!bg-gray-100 dark:!bg-gray-800 dark:!text-gray-400 dark:hover:!text-gray-300 dark:hover:!bg-gray-700 !focus:outline-none !focus:ring-2 !focus:ring-gray-200 dark:!focus:ring-gray-700 !transition-all !duration-150 !ease-in-out !flex !items-center !justify-center"
-            >
-              <PlusIcon className="w-5 h-5" />
-            </Button>
-          </div>
         </div>
 
         <input type="hidden" name="dateRange" value={dateRange} />
