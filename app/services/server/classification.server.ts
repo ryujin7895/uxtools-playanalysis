@@ -47,7 +47,6 @@ export interface CompetitorAnalysis {
     better: string[];
     worse: string[];
   };
-  comparisonExamples: string[];
 }
 
 /**
@@ -459,97 +458,6 @@ export class ClassificationService {
   }
 
   /**
-   * Analyze competitor comparisons
-   * @param comments Analyzed comments
-   * @param competitor Competitor name
-   * @returns Competitor analysis
-   */
-  private static analyzeCompetitor(
-    comments: AnalyzedComment[],
-    competitor: string
-  ): CompetitorAnalysis {
-    // Filter comments that mention the competitor
-    const mentioningComments = comments.filter(comment => 
-      comment.competitorMentions.includes(competitor)
-    );
-    
-    // Calculate average sentiment
-    const totalSentiment = mentioningComments.reduce((sum, comment) => sum + comment.score, 0);
-    const avgSentiment = mentioningComments.length > 0 ? 
-      totalSentiment / mentioningComments.length : 0;
-    
-    // Extract comparison examples
-    const comparisonExamples: string[] = [];
-    const betterFeatures: string[] = [];
-    const worseFeatures: string[] = [];
-    
-    // Comparison patterns
-    const betterPatterns = [
-      new RegExp(`better than ${competitor}`, 'i'),
-      new RegExp(`${competitor} doesn't have`, 'i'),
-      new RegExp(`unlike ${competitor}`, 'i'),
-      new RegExp(`${competitor} lacks`, 'i')
-    ];
-    
-    const worsePatterns = [
-      new RegExp(`worse than ${competitor}`, 'i'),
-      new RegExp(`${competitor} is better`, 'i'),
-      new RegExp(`${competitor} has`, 'i'),
-      new RegExp(`like ${competitor}`, 'i')
-    ];
-    
-    for (const comment of mentioningComments) {
-      // Check for comparison statements
-      const isComparison = comment.intentions.includes('comparison');
-      
-      if (isComparison) {
-        // Add as example if not too many already
-        if (comparisonExamples.length < 5) {
-          comparisonExamples.push(comment.content);
-        }
-        
-        // Check for better/worse patterns
-        let foundBetter = false;
-        let foundWorse = false;
-        
-        for (const pattern of betterPatterns) {
-          if (pattern.test(comment.content)) {
-            foundBetter = true;
-            break;
-          }
-        }
-        
-        for (const pattern of worsePatterns) {
-          if (pattern.test(comment.content)) {
-            foundWorse = true;
-            break;
-          }
-        }
-        
-        // Extract feature requests as potential better/worse features
-        for (const feature of comment.featureRequests) {
-          if (foundWorse) {
-            betterFeatures.push(feature);
-          } else if (foundBetter) {
-            worseFeatures.push(feature);
-          }
-        }
-      }
-    }
-    
-    return {
-      competitor,
-      mentions: mentioningComments.length,
-      sentiment: avgSentiment,
-      features: {
-        better: Array.from(new Set(betterFeatures)),
-        worse: Array.from(new Set(worseFeatures))
-      },
-      comparisonExamples
-    };
-  }
-
-  /**
    * Classify feature requests into clusters
    * @param comments Analyzed comments
    * @param options Classification options
@@ -760,27 +668,6 @@ export class ClassificationService {
   }
 
   /**
-   * Analyze competitors mentioned in reviews
-   * @param comments Analyzed comments
-   * @returns Array of competitor analyses
-   */
-  public static analyzeCompetitors(comments: AnalyzedComment[]): CompetitorAnalysis[] {
-    // Get all unique competitors mentioned
-    const competitors = new Set<string>();
-    
-    comments.forEach(comment => {
-      comment.competitorMentions.forEach(competitor => {
-        competitors.add(competitor);
-      });
-    });
-    
-    // Analyze each competitor
-    return Array.from(competitors)
-      .map(competitor => this.analyzeCompetitor(comments, competitor))
-      .sort((a, b) => b.mentions - a.mentions); // Sort by mention count
-  }
-
-  /**
    * Perform complete classification of reviews
    * @param comments Analyzed comments
    * @param appVersions Array of app versions
@@ -798,9 +685,6 @@ export class ClassificationService {
     // Classify bug reports
     const bugClusters = this.classifyBugReports(comments, appVersions, options);
     
-    // Analyze competitors
-    const competitorAnalysis = this.analyzeCompetitors(comments);
-    
     // Identify recurring issues (simplified for now)
     const recurringIssues = bugClusters.filter(bug => bug.status === 'recurring');
     
@@ -817,7 +701,7 @@ export class ClassificationService {
     return {
       featureClusters,
       bugClusters,
-      competitorAnalysis,
+      competitorAnalysis: [],
       recurringIssues,
       topFeatureRequests,
       criticalBugs

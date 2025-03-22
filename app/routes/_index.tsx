@@ -7,7 +7,6 @@ import { SunIcon, MoonIcon, PlusIcon, MinusIcon, ChartBarIcon, ArrowPathIcon, XM
 import { useTheme, Theme } from "~/utils/themeProvider";
 import { motion, AnimatePresence } from "framer-motion";
 import { SingleAppAnalysis } from "~/components/analysis/SingleAppAnalysis";
-import { ComparisonAnalysis } from "~/components/analysis/ComparisonAnalysis";
 import { AnalysisResults } from "~/components/analysis/AnalysisResults";
 import { ThemeToggle } from "~/components/common/ThemeToggle";
 import { playStoreAnalysis } from "~/services/server";
@@ -287,7 +286,7 @@ export default function Index() {
   const actionData = useActionData<{ success: boolean; results: AnalysisResult[] }>();
   
   // State for app inputs
-  const [appInputs, setAppInputs] = useState([{ id: 1, value: "", error: "" }]);
+  const [appInput, setAppInput] = useState({ id: 1, value: "", error: "" });
   const [dateRange, setDateRange] = useState(DATE_RANGE_PRESETS[1].value);
   const [customDateRange, setCustomDateRange] = useState({ start: "", end: "" });
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
@@ -296,14 +295,12 @@ export default function Index() {
   const startDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
 
-  // Check if we're in comparison mode whenever appInputs changes
-  const isComparisonMode = appInputs.length > 1;
   const isAnalyzing = navigation.state === "submitting";
 
   // Reset form when analysis is complete
   useEffect(() => {
     if (actionData?.success && actionData.results) {
-      setAppInputs([{ id: 1, value: "", error: "" }]);
+      setAppInput({ id: 1, value: "", error: "" });
     }
   }, [actionData]);
 
@@ -323,37 +320,15 @@ export default function Index() {
   };
 
   // Handle app input change
-  const handleAppInputChange = (id: number, value: string) => {
+  const handleAppInputChange = (value: string) => {
     const error = validateAppInput(value);
-    setAppInputs(prev => 
-      prev.map(input => 
-        input.id === id ? { ...input, value, error } : input
-      )
-    );
-  };
-
-  // Add new app input for comparison (max 3)
-  const addAppInput = () => {
-    if (appInputs.length < 3) {
-      const newId = Math.max(...appInputs.map(i => i.id)) + 1;
-      setAppInputs([...appInputs, { id: newId, value: "", error: "" }]);
-    }
-  };
-
-  // Remove an app input
-  const removeAppInput = (id: number) => {
-    if (appInputs.length > 1) {
-      setAppInputs(appInputs.filter(input => input.id !== id));
-    }
+    setAppInput({ ...appInput, value, error });
   };
 
   // Reset analysis
   const submit = useSubmit();
   const resetAnalysis = () => {
-    // Reset the form inputs
-    setAppInputs([{ id: 1, value: "", error: "" }]);
-    
-    // Submit a reset action to clear the analysis state
+    setAppInput({ id: 1, value: "", error: "" });
     submit(
       { _action: "reset" },
       { method: "post", action: "/" }
@@ -363,7 +338,6 @@ export default function Index() {
   // Handle date range change
   const handleDateRangeChange = (value: string) => {
     setDateRange(value);
-    // If custom is selected, focus on the start date input and open date picker
     if (value === 'custom' && startDateRef.current) {
       setIsDatePickerOpen(true);
       setTimeout(() => startDateRef.current?.focus(), 100);
@@ -373,21 +347,24 @@ export default function Index() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
-      <Navbar fluid className="border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 px-4 sm:px-6">
-        <Navbar.Brand href="#" className="flex items-center">
-          <img src="/logo-light.png" className="mr-3 h-8 sm:h-9 dark:hidden" alt="Play Analysis Logo" />
-          <img src="/logo-dark.png" className="mr-3 h-8 hidden sm:h-9 dark:block" alt="Play Analysis Logo" />
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-            Play Store Analysis
-          </span>
-        </Navbar.Brand>
-        <div className="flex md:order-2">
-          <ThemeToggle />
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Navbar */}
+      <Navbar fluid className="sticky top-0 z-50 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <Navbar.Brand href="/" className="flex items-center space-x-3">
+            <ChartBarIcon className="h-8 w-8 text-blue-600" />
+            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+              Play Store Analysis
+            </span>
+          </Navbar.Brand>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+          </div>
         </div>
       </Navbar>
-      
-      <main className="flex-grow container mx-auto px-4 py-12 flex items-center justify-center">
+
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-8 flex flex-col items-center">
         <AnimatePresence mode="wait">
           {!actionData?.success ? (
             <motion.div 
@@ -398,55 +375,32 @@ export default function Index() {
               transition={{ duration: 0.3 }}
               className="w-full max-w-2xl"
             >
-              {isComparisonMode ? (
-                <ComparisonAnalysis 
-                  appInputs={appInputs}
-                  onAddApp={addAppInput}
-                  onRemoveApp={removeAppInput}
-                  onInputChange={handleAppInputChange}
-                  dateRange={dateRange}
-                  onDateRangeChange={handleDateRangeChange}
-                  isAnalyzing={isAnalyzing}
-                />
-              ) : (
-                <SingleAppAnalysis 
-                  appInput={appInputs[0]}
-                  onInputChange={(value) => handleAppInputChange(appInputs[0].id, value)}
-                  dateRange={dateRange}
-                  onDateRangeChange={handleDateRangeChange}
-                  onAddApp={addAppInput}
-                  isAnalyzing={isAnalyzing}
-                />
-              )}
+              <SingleAppAnalysis 
+                appInput={appInput}
+                onInputChange={handleAppInputChange}
+                dateRange={dateRange}
+                onDateRangeChange={handleDateRangeChange}
+                isAnalyzing={isAnalyzing}
+              />
             </motion.div>
           ) : (
             <AnalysisResults 
               onReset={resetAnalysis}
-              appCount={appInputs.length}
-              result={actionData?.results && Array.isArray(actionData.results) && actionData.results.length > 0 
+              appCount={1}
+              result={actionData?.results && actionData.results.length > 0 
                 ? actionData.results[0] 
-                : (actionData?.results as any) || { comments: [], sentiment: { positive: 0, negative: 0, neutral: 0 }, intentions: { feature_request: [], bug_report: [], praise: [], complaint: [] }, keywords: [] }}
-              comparisonResults={actionData?.results && Array.isArray(actionData.results) && actionData.results.length > 1 
-                ? actionData.results.slice(1) 
-                : undefined}
+                : { comments: [], sentiment: { positive: 0, negative: 0, neutral: 0 }, intentions: { feature_request: [], bug_report: [], praise: [], complaint: [] }, keywords: [] }}
             />
           )}
         </AnimatePresence>
       </main>
-      
-      <footer className="bg-white shadow-inner dark:bg-gray-800 mt-8">
-        <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            Play Store Analysis Tool © {new Date().getFullYear()}
-          </span>
-          <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-            <li>
-              <a href="#" className="mr-6 hover:underline hover:text-gray-900 dark:hover:text-white transition-colors">About</a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline hover:text-gray-900 dark:hover:text-white transition-colors">Help</a>
-            </li>
-          </ul>
+
+      {/* Footer */}
+      <footer className="py-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div className="container mx-auto px-4">
+          <div className="text-center text-sm text-gray-500 dark:text-gray-400">
+            © {new Date().getFullYear()} Play Store Analysis Tool. All rights reserved.
+          </div>
         </div>
       </footer>
     </div>

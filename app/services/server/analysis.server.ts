@@ -127,13 +127,12 @@ export interface AnalysisResult {
     praise: AnalyzedComment[];
     complaint: AnalyzedComment[];
     question: AnalyzedComment[];
-    comparison: AnalyzedComment[];
   };
   featureRequests: FeatureRequestAnalysis[];
   bugReports: BugReportAnalysis[];
   userSegments: UserSegmentAnalysis;
   competitorMentions: CompetitorMentionAnalysis[];
-  trends: any; // Will be implemented in Step 4
+  trends: any;
 }
 
 /**
@@ -353,11 +352,6 @@ export class ReviewAnalysisService {
       question: [
         'how do i', 'how to', 'can you', 'is there', 'does it', 'will it',
         'when will', 'why is', 'where is', 'what is', '?'
-      ],
-      comparison: [
-        'better than', 'worse than', 'compared to', 'similar to', 'like',
-        'unlike', 'preferred', 'instead of', 'alternative', 'competitor',
-        'competition', 'other apps', 'other games', 'rivals'
       ]
     };
     
@@ -634,7 +628,6 @@ export class ReviewAnalysisService {
       praise: analyzedComments.filter(c => c.intentions.includes('praise')),
       complaint: analyzedComments.filter(c => c.intentions.includes('complaint')),
       question: analyzedComments.filter(c => c.intentions.includes('question')),
-      comparison: analyzedComments.filter(c => c.intentions.includes('comparison'))
     };
     
     // Analyze feature requests

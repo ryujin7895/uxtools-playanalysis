@@ -1,22 +1,18 @@
 import type { Config } from "tailwindcss";
+import {content, plugin} from 'flowbite-react/tailwind'
+
 
 export default {
-  content: ["./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}",
+    content(),
+  ],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: [
-          "Inter",
-          "ui-sans-serif",
-          "system-ui",
-          "sans-serif",
-          "Apple Color Emoji",
-          "Segoe UI Emoji",
-          "Segoe UI Symbol",
-          "Noto Color Emoji",
-        ],
-      },
-    },
+    extend: {},
   },
-  plugins: [],
-} satisfies Config;
+  plugins: [
+    plugin(),
+    require('flowbite-typography'),
+  ],
+  darkMode: 'class',
+} satisfies Config

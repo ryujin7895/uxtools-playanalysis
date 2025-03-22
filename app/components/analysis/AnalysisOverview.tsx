@@ -110,11 +110,8 @@ const CollapsibleCard = ({ title, icon, children }: { title: string; icon?: Reac
   );
 };
 
-export function AnalysisOverview({ result, comparisonResults }: EnhancedAnalysisProps) {
+export function AnalysisOverview({ result }: EnhancedAnalysisProps) {
   const enhancedResult = result as EnhancedAnalysisResult;
-  const enhancedComparisonResults = comparisonResults as EnhancedAnalysisResult[] | undefined;
-  
-  const isComparisonMode = !!comparisonResults?.length;
 
   return (
     <div className="space-y-6">
@@ -136,17 +133,6 @@ export function AnalysisOverview({ result, comparisonResults }: EnhancedAnalysis
         <div className="lg:col-span-8 space-y-6">
           {/* Primary App Sentiment Analysis */}
           <SentimentDistribution data={result} />
-
-          {/* Comparison Apps Sentiment Analysis */}
-          {comparisonResults?.map((compResult, index) => (
-            <CollapsibleCard
-              key={index}
-              title={`Comparison App ${index + 1} Sentiment Analysis`}
-              icon={<ChartPieIcon className="w-5 h-5 mr-2 text-blue-600" />}
-            >
-              <SentimentDistribution data={compResult} />
-            </CollapsibleCard>
-          ))}
         </div>
 
         {/* Right Column - Keywords */}

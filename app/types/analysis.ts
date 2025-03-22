@@ -77,10 +77,8 @@ export interface AnalysisResultsProps {
   onReset: () => void;
   appCount: number;
   result: AnalysisResult | EnhancedAnalysisResult;
-  comparisonResults?: (AnalysisResult | EnhancedAnalysisResult)[];
 }
 
 export interface EnhancedAnalysisProps extends AnalysisResultsProps {
   result: EnhancedAnalysisResult;
-  comparisonResults?: EnhancedAnalysisResult[];
 }
